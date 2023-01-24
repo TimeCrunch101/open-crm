@@ -1,0 +1,39 @@
+{
+  "name": "open-crm",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "Open source CRM solution",
+  "main": "app.js",
+  "scripts": {
+    "vue": "cd ./client && npm run dev",
+    "api": "nodemon ./server/app.js",
+    "build": "cd ./client && npm run build",
+    "test": "jest",
+    "prod": "set NODE_ENV=production&& node ./server/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TimeCrunch101/open-crm.git"
+  },
+  "keywords": [
+    "CRM",
+    "Open-Source"
+  ],
+  "author": "Aaron Allen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TimeCrunch101/open-crm/issues"
+  },
+  "homepage": "https://github.com/TimeCrunch101/open-crm#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "mysql2": "^3.0.1"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.3",
+    "jest": "^29.3.1",
+    "nodemon": "^2.0.20"
+  }
+}
