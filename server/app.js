@@ -1,10 +1,15 @@
-import express from "express";
-import { initGetRouter } from "./routes/getRouter.js";
-import { initPostRouter } from "./routes/postRouter.js";
+const express = require('express')
+const initGetRouter = require('./routes/getRouter')
+const initPostRouter = require('./routes/postRouter')
 const app = express()
 
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
+
+app.use((req, res, next) => {
+    res.locals.user = req.user
+    next()
+})
 
 initGetRouter(app)
 initPostRouter(app)

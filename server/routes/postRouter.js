@@ -1,14 +1,17 @@
-import express from 'express';
-import { rootPath } from '../controllers/postController.js';
+const express = require('express')
+const postController = require('../controllers/postController')
+const auth = require('../controllers/authController')
 const postRouter = express.Router();
 
 const initPostRouter = (app) => {
 
-    postRouter.post("/post", rootPath)
+    postRouter.post("/api/login", auth.isNotAuthenticated, auth.logIn)
+    postRouter.post("/api/register", auth.isNotAuthenticated, auth.register)
+    postRouter.put("/api/create/client", auth.isAuthenticated, postController.createClient)
+    postRouter.put("/api/create/client/note", auth.isAuthenticated, postController.createClientNote)
+    postRouter.put("/api/create/client/contact", auth.isAuthenticated, postController.createClientContact)
 
     return app.use('/', postRouter);
 }
 
-export {
-    initPostRouter
-}
+module.exports = initPostRouter

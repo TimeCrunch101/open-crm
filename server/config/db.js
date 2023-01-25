@@ -1,17 +1,20 @@
-import { createPool } from 'mysql2';
-import {config as enableDotEnv} from 'dotenv'
-if (process.env.NODE_ENV !== 'production') enableDotEnv()
+const mysql2 = require('mysql2')
+if (process.env.NODE_ENV !== 'production') require('dotenv').config()
 
-const pool = createPool({
+const DB = mysql2.createPool({
   host: process.env.HOST,
   user: process.env.USER,
   password: process.env.PASS,
-  database: (process.env.NODE_ENV !== 'production') ? process.env.DB_NAME_DEV : process.env.DB_NAME_PROD,
+  database:process.env.DB_NAME_DEV,
+  port: 3306,
+  ssl: {
+    rejectUnauthorized: false,
+  },
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0
 });
 
-export {
-    pool as DB
+module.exports = {
+  DB
 }

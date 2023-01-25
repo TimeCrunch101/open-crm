@@ -1,7 +1,6 @@
 {
   "name": "open-crm",
   "version": "0.0.1",
-  "type": "module",
   "description": "Open source CRM solution",
   "main": "app.js",
   "scripts": {
@@ -26,10 +25,12 @@
   },
   "homepage": "https://github.com/TimeCrunch101/open-crm#readme",
   "dependencies": {
+    "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
-    "mysql2": "^3.0.1"
+    "mysql2": "^3.0.1",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "dotenv": "^16.0.3",

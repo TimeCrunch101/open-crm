@@ -1,14 +1,13 @@
-import express from 'express';
-import { rootPath } from '../controllers/getController.js';
+const express = require('express')
+const getController = require('../controllers/getController')
+const auth = require('../controllers/authController')
 const getRouter = express.Router();
 
 const initGetRouter = (app) => {
 
-    getRouter.get("/", rootPath)
+    getRouter.get('/api/get/users', auth.isAuthenticated ,getController.getAllUsers)
 
     return app.use('/', getRouter);
 }
 
-export {
-    initGetRouter
-}
+module.exports = initGetRouter
