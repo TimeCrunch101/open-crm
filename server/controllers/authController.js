@@ -30,31 +30,39 @@ exports.isNotAuthenticated = (req, res, next) => {
 }
 
 exports.logIn = async(req, res) => {
-    const user = await DATABASE.getUserByEmail(req.body.username)
-    if (user === undefined) {
-        res.status(401).json({
-            message: 'Your username or password is incorrect',
-        })
-    } else {
-        const passMatch = await bcrypt.compare(req.body.password, user.password)
-        if (passMatch) {
-            const token = jwt.sign({
-                uuid: user.uuid,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                fullName: user.fullName,
-                email: user.email
-            },process.env.JWT_SKEY,{expiresIn: '30m'})
-
-            res.status(200).json({
-                message: `Welcome ${user.fullName}`,
-                token: token
-            })
-        } else {
+    try {
+        const user = await DATABASE.getUserByEmail(req.body.username)
+        if (user === undefined) {
             res.status(401).json({
                 message: 'Your username or password is incorrect',
             })
+        } else {
+            const passMatch = await bcrypt.compare(req.body.password, user.password)
+            if (passMatch) {
+                const token = jwt.sign({
+                    uuid: user.uuid,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    fullName: user.fullName,
+                    email: user.email
+                },process.env.JWT_SKEY,{expiresIn: '30m'})
+    
+                res.status(200).json({
+                    message: `Welcome ${user.fullName}`,
+                    token: token
+                })
+            } else {
+                res.status(401).json({
+                    message: 'Your username or password is incorrect',
+                })
+            }
         }
+    } catch (error) {
+        res.status(500).json({
+            error: error.message,
+            cause: error.cause,
+            stack: error.stack
+        })
     }
 }
 
