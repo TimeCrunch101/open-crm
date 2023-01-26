@@ -6,7 +6,7 @@ const { DB } = require('../config/db');
 
 exports.getAllUsers = () => {
     return new Promise((resolve, reject) => {
-        DB.query("SELECT uuid, firstname, lastname, fullname, email FROM users", (err, data) => {
+        DB.query("SELECT uuid, firstName, lastName, fullName, email FROM users", (err, data) => {
             try {
                 if (err) throw new Error('Could not get users', {cause: err.message})
                 resolve(data)
@@ -162,6 +162,25 @@ exports.createClientContact = (contact) => {
             try {
                 if (err) throw new Error('Could not create contact', {cause: err.message})
                 resolve(true)
+            } catch (error) {
+                reject(error)
+            }
+        })
+    })
+}
+
+/**
+ * 
+ * @param {number} clientID The ID of the client
+ * @returns A promise, resolves true if successful, rejects with an error Object if the query failed
+ */
+
+exports.getClientNotes = (clientID) => {
+    return new Promise((resolve, reject) => {
+        DB.query("SELECT * FROM client_notes WHERE client = ?",[clientID], (err, notes) => {
+            try {
+                if (err) throw new Error("Could not retrieve notes", {cause: err.message})
+                resolve(notes)
             } catch (error) {
                 reject(error)
             }
