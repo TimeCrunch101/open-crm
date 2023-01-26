@@ -6,7 +6,7 @@ const { DB } = require('../config/db');
 
 exports.getAllUsers = () => {
     return new Promise((resolve, reject) => {
-        DB.query("SELECT uuid, firstname, lastname, fullname, email FROM users", (err, data) => {
+        DB.query("SELECT uuid, firstName, lastName, fullName, email FROM users", (err, data) => {
             try {
                 if (err) throw new Error('Could not get users', {cause: err.message})
                 resolve(data)
@@ -71,8 +71,13 @@ exports.createUser = (uuid, firstName, lastName, fullName, email, passwordHash) 
     })
 }
 
+// TODO: disableUser(userID||uuid)
+
+// TODO: updateUser(userID||uuid)
+
+// TODO: deleteUser(userID||uuid)
+
 /**
- * 
  * @param {object} company 
  * @param {string} company.companyName
  * @param {string} company.street
@@ -109,36 +114,13 @@ exports.createClient = (company) => {
     })
 }
 
-/**
- * 
- * @param {object} note The Note Object
- * @param {string} note.data The message body
- * @param {string} note.timestamp A time stamp should be generated new Date()
- * @param {string} note.author Who wrote the note
- * @param {number} note.client The ID of the client the note should be assigned to
- * @returns A promise, resolves true if successful, rejects with an error Object if the query failed
- */
+// TODO: getClients()
 
-exports.createClientNote = (note) => {
-    return new Promise((resolve, reject) => {
-        DB.query("INSERT INTO client_notes SET ?",{
-            note: note.data,
-            timestamp: note.timestamp,
-            author: note.author,
-            client: note.client
-        },(err) => {
-            try {
-                if (err) throw new Error("Could not create the note", {cause: err.message})
-                resolve(true)
-            } catch (error) {
-                reject(error)
-            }
-        })
-    })
-}
+// TODO: deleteClient(clientID)
+
+// TODO: updateClient(clientID)
 
 /**
- * 
  * @param {object} contact The Contact Object
  * @param {string} contact.firstName
  * @param {string} contact.lastName
@@ -147,7 +129,7 @@ exports.createClientNote = (note) => {
  * @param {string} contact.cellPhone
  * @param {number} contact.client
  * @returns A promise, resolves true if successful, rejects with an error Object if the query failed
- */
+*/
 
 exports.createClientContact = (contact) => {
     return new Promise((resolve, reject) => {
@@ -168,3 +150,58 @@ exports.createClientContact = (contact) => {
         })
     })
 }
+
+// TODO: getClientContacts()
+
+// TODO: updateClientContact()
+
+// TODO: DeleteClientContact()
+
+/**
+ * @param {object} note The Note Object
+ * @param {string} note.data The message body
+ * @param {string} note.timestamp A time stamp should be generated new Date()
+ * @param {string} note.author Who wrote the note
+ * @param {number} note.client The ID of the client the note should be assigned to
+ * @returns A promise, resolves true if successful, rejects with an error Object if the query failed
+*/
+
+exports.createClientNote = (note) => {
+    return new Promise((resolve, reject) => {
+        DB.query("INSERT INTO client_notes SET ?",{
+            note: note.data,
+            timestamp: note.timestamp,
+            author: note.author,
+            client: note.client
+        },(err) => {
+            try {
+                if (err) throw new Error("Could not create the note", {cause: err.message})
+                resolve(true)
+            } catch (error) {
+                reject(error)
+            }
+        })
+    })
+}
+
+/**
+ * @param {number} clientID The ID of the client
+ * @returns A promise, resolves true if successful, rejects with an error Object if the query failed
+*/
+
+exports.getClientNotes = (clientID) => {
+    return new Promise((resolve, reject) => {
+        DB.query("SELECT * FROM client_notes WHERE client = ?",[clientID], (err, notes) => {
+            try {
+                if (err) throw new Error("Could not retrieve notes", {cause: err.message})
+                resolve(notes)
+            } catch (error) {
+                reject(error)
+            }
+        })
+    })
+}
+
+// TODO: updateClientNote()
+
+// TODO: DeleteClientNote()

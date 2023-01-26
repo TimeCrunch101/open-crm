@@ -15,3 +15,17 @@ exports.getAllUsers = async (req, res) => {
         })
     }   
 }
+
+exports.getClientNotes = async (req, res) => {
+    try {
+        const notes = await DATABASE.getClientNotes(req.params.clientID)
+        res.status(200).json({
+            notes: notes,
+        })
+    } catch (error) {
+        res.status(500).json({
+            error: error.message,
+            cause: error.cause
+        })
+    }
+}

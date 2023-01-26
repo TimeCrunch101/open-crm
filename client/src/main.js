@@ -1,14 +1,26 @@
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
+// Bootstrap
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
+import "bootstrap/dist/js/bootstrap.js";
 
-import App from './App.vue'
-import router from './router'
+import { createApp } from "vue";
+import { createPinia } from "pinia";
+import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 
-import './assets/main.css'
+import App from "./App.vue";
+import router from "./router";
 
-const app = createApp(App)
+import axios from "axios";
+import "./assets/main.css";
+if (process.env.NODE_ENV !== "production") {
+  axios.defaults.baseURL = "http://localhost:8080";
+}
 
-app.use(createPinia())
-app.use(router)
+const pinia = createPinia();
+pinia.use(piniaPluginPersistedstate);
+const app = createApp(App);
 
-app.mount('#app')
+app.use(pinia);
+app.use(router);
+
+app.mount("#app");
