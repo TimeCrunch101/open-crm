@@ -11,7 +11,7 @@ exports.isAuthenticated = async (req, res, next) => {
     next();
   } catch (error) {
     res.status(401).json({
-      message: "You are unauthorized", // FIXME: Better error messages for the end user
+      message: "Unauthorized",
     });
   }
 };
@@ -20,9 +20,7 @@ exports.isNotAuthenticated = (req, res, next) => {
   try {
     const token = req.headers.authorization.split(" ", 2);
     jwt.verify(token[1], process.env.JWT_SKEY);
-    res.status(400).json({
-      message: "You are already logged in", // FIXME: Better error messages for the end user
-    });
+    res.status(400);
   } catch (error) {
     next();
   }
@@ -33,7 +31,7 @@ exports.logIn = async (req, res) => {
     const user = await DATABASE.getUserByEmail(req.body.username);
     if (user === undefined) {
       res.status(401).json({
-        message: "Your username or password is incorrect", // FIXME: Better error messages for the end user
+        message: "Incorrect Username or Password",
       });
     } else {
       const passMatch = await bcrypt.compare(req.body.password, user.password);
@@ -47,7 +45,7 @@ exports.logIn = async (req, res) => {
             email: user.email,
           },
           process.env.JWT_SKEY,
-          //{ expiresIn: "15s" } // FIXME: Update for production
+          //{ expiresIn: "15s" } // TODO: Update for production
         );
 
         res.status(200).json({
@@ -56,7 +54,7 @@ exports.logIn = async (req, res) => {
         });
       } else {
         res.status(401).json({
-          message: "Your username or password is incorrect", // FIXME: Better error messages for the end user
+          message: "Incorrect Username or Password",
         });
       }
     }
