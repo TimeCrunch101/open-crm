@@ -75,7 +75,7 @@ exports.register = async (req, res) => {
   const fullName = `${firstName} ${lastName}`;
   const uuid = uuidv4();
   try {
-    await DATABASE.createUser(uuid, firstName, lastName, fullName, email, hash);
+    await DATABASE.register(uuid, firstName, lastName, fullName, email, hash);
     res.status(200).json({
       message: "You have successfully registered",
     });

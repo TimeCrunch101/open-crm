@@ -45,7 +45,7 @@ exports.getUserByEmail = (email) => {
  * @returns true if the user was created, rejects with new Error()
  */
 
-exports.createUser = (uuid, firstName, lastName, fullName, email, passwordHash) => {
+exports.register = (uuid, firstName, lastName, fullName, email, passwordHash) => {
     return new Promise((resolve, reject) => {
         DB.query("INSERT INTO users SET ?",{
             uuid: uuid,
@@ -75,7 +75,23 @@ exports.createUser = (uuid, firstName, lastName, fullName, email, passwordHash) 
 
 // TODO: updateUser(userID||uuid)
 
-// TODO: deleteUser(userID||uuid)
+/**
+ * @param {string} uuid The users Unique ID
+ * @returns A promise, resolves true if successful, rejects with an error Object if the query failed
+ */
+
+exports.deleteUser = (uuid) => {
+    return new Promise((resolve, reject) => {
+        DB.query("DELETE FROM users WHERE uuid = ?",[uuid],(err) => {
+            try {
+                if (err) throw err; // TODO: Create an error message
+                resolve(true)
+            } catch (error) {
+                reject(error)
+            }
+        })
+    })  
+}
 
 /**
  * @param {object} company 
