@@ -16,10 +16,18 @@ test('Get User By Email', async () => {
     expect(res.email).toEqual('TEST1@TEST1.COM1')
 })
 
-
 // TODO: TEST disableUser
 
-// TODO: TEST updateUser
+// FIXME: This is broken
+test('Update User', async () => { 
+    const res = await DATABASE.updateUser(12, {
+        firstName: 'Test1',
+        lastName: "Test2",
+        fullName: 'Test1 Test2',
+        email: 'test1@test2.com2'
+    })
+    expect(res).toEqual(true)
+})
 
 test('Delete User', async () => {
     const res = await DATABASE.deleteUser("123")

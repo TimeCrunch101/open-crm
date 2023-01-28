@@ -64,3 +64,22 @@ exports.createClientContact = async (req, res) => {
         })
     }
 }
+
+exports.updateUser = async (req, res) => {
+    try {
+        await dbController.updateUser(req.params.userID, {
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            fullName: req.body.fullName,
+            email: req.body.email,
+        })
+        res.status(201).json({
+            message: 'User updated'
+        })
+    } catch (error) {
+        res.status(500).json({
+            error: error.message,
+            cause: error.cause
+        })
+    }
+}

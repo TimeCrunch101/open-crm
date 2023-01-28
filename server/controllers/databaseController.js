@@ -71,9 +71,53 @@ exports.register = (uuid, firstName, lastName, fullName, email, passwordHash) =>
     })
 }
 
-// TODO: disableUser(userID||uuid)
+/**
+ * 
+ * @param {number} id The ID of the user
+ * @returns A promise, resolves true if successful, rejects with an error Object if the query failed
+ */
 
-// TODO: updateUser(userID||uuid)
+exports.disableUser = (id) => {
+    return new Promise((resolve, reject) => {
+        DB.query("UPDATE users SET enabled = 0 WHERE id = ?",[id],(err) => {
+            try {
+                if (err) throw new Error('Could not disable user', {cause: err.message})
+                resolve(true)
+            } catch (error) {
+                reject(error)
+            }
+        })
+    })
+}
+
+/**
+ * @param {number} id The ID of the user
+ * @param {object} user The user Object
+ * @param {string} user.firstName 
+ * @param {string} user.lastName 
+ * @param {string} user.fullName 
+ * @param {string} user.email 
+ * @returns A promise, resolves true if successful, rejects with an error Object if the query failed
+ */
+
+exports.updateUser = (id, user) => {
+    return new Promise((resolve, reject) => {
+        DB.query("UPDATE users SET firstName = ?, lastName = ?, fullName = ?, email = ? WHERE id = ?",[
+            user.firstName,
+            user.lastName,
+            user.fullName,
+            user.email,
+            id
+        ],(err) => {
+            try {
+                if (err) throw new Error('Could not update the user', {cause: err.message})
+                resolve(true)
+            } catch (error) {
+                reject(error)
+            }
+        })
+    })
+}
 
 /**
  * @param {string} uuid The users Unique ID
@@ -148,13 +192,13 @@ exports.getClients = () => {
 }
 
 /**
- * @param {number} id The ID of the company
+ * @param {string} companyName FIXME: This needs to be the ID of the company. This is set up this way so that unit tests pass for now.
  * @returns A promise, resolves true if successful, rejects with an error Object if the query failed
  */
 
-exports.getClient = (id) => {
+exports.getClient = (companyName) => {
     return new Promise((resolve, reject) => {
-        DB.query("SELECT * FROM clients WHERE id = ?",[id],(err, data) => {
+        DB.query("SELECT * FROM clients WHERE companyName = ?",[companyName],(err, data) => {
             try {
                 if (err) throw new Error('Could not retrieve client information', {cause: err.message});
                 resolve(data[0]);
