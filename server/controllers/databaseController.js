@@ -130,9 +130,58 @@ exports.createClient = (company) => {
     })
 }
 
-// TODO: getClients()
+/**
+ * @returns A promise, resolves with an Array of clients, or rejects with an error Object
+ */
 
-// TODO: deleteClient(clientID)
+exports.getClients = () => {
+    return new Promise((resolve, reject) => {
+        DB.query("SELECT * FROM clients",(err, data) => {
+            try {
+                if (err) throw new Error('Could not retrieve client list', {cause: err.message});
+                resolve(data)
+            } catch (error) {
+                reject(error)
+            }
+        })
+    })
+}
+
+/**
+ * @param {number} id The ID of the company
+ * @returns A promise, resolves true if successful, rejects with an error Object if the query failed
+ */
+
+exports.getClient = (id) => {
+    return new Promise((resolve, reject) => {
+        DB.query("SELECT * FROM clients WHERE id = ?",[id],(err, data) => {
+            try {
+                if (err) throw new Error('Could not retrieve client information', {cause: err.message});
+                resolve(data[0]);
+            } catch (error) {
+                reject(err);
+            }
+        })
+    })
+}
+
+/**
+ * @param {number} clientID The ID of the client
+ * @returns A promise, resolves true if successful, rejects with an error Object if the query failed
+ */
+
+exports.deleteClient = (clientID) => {
+    return new Promise((resolve, reject) => {
+        DB.query("DELETE FROM clients WHERE id = ?",[clientID],(err) => {
+            try {
+                if (err) throw new Error("Could not delete the client", {cause: err.message})
+                resolve(true)
+            } catch (error) {
+                reject(err)
+            }
+        })
+    })
+}
 
 // TODO: updateClient(clientID)
 
