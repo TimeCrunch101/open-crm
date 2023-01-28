@@ -14,8 +14,8 @@ const login = () => {
     axios.post('/api/login', {
         username: form.value.username,
         password: form.value.password
-    }).then(async(res) => {
-        await auth.setUserInfo(res.data.fullName, res.data.token)
+    }).then((res) => {
+        auth.setUserInfo(res.data.fullName, res.data.token) // TODO: Monitor for issues. Removed await from auth.setUserInfo()
         router.push('/')
     }).catch((err) => {
         error.value.message = err.response.data.message

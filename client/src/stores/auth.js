@@ -17,11 +17,9 @@ export const useAuthStore = defineStore("auth", {
     },
   },
   actions: {
-    setUserInfo(fullName, token) { // FIXME: This doesn't need to return a promise
-      return new Promise((resolve, reject) => {
-        (this.fullName = fullName), (this.token = token);
-        resolve(true)
-      })
+    setUserInfo(fullName, token) {
+      this.fullName = fullName
+      this.token = token
     },
     logoutUser() {
       (this.fullName = null), (this.token = null);
