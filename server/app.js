@@ -8,7 +8,7 @@ const app = express()
 
 const apiLimiter = rateLimit({
 	windowMs: 15 * 60 * 1000, // 15 minutes
-	max: 100, // FIXME: Currently 100 requests per window per 15 minutes
+	max: 1000, // TODO: update for production
 	standardHeaders: true,
 	legacyHeaders: false,
 })
