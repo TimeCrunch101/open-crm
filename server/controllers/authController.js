@@ -59,10 +59,9 @@ exports.logIn = async (req, res) => {
       }
     }
   } catch (error) {
-    res.status(500).json({ // FIXME: Better error messages for the end user
+    res.status(500).json({
       error: error.message,
       cause: error.cause,
-      stack: error.stack,
     });
   }
 };
@@ -78,7 +77,7 @@ exports.register = async (req, res) => {
       message: "You have successfully registered",
     });
   } catch (error) {
-    res.status(500).json({ // FIXME: Better error messages for the end user
+    res.status(500).json({
       error: error.message,
       cause: error.cause,
     });
