@@ -2,11 +2,15 @@
 import axios from 'axios';
 import {ref, onBeforeMount} from "vue";
 import Error from "./alerts/Error.vue"
+import Success from './alerts/Success.vue';
 
 const notes = ref([])
 const error = ref({
     message: null,
     cause: null
+})
+const success = ref({
+    message: null,
 })
 
 const props = defineProps({
@@ -34,6 +38,7 @@ const deleteNote = (noteID) => {
         }
     }).then((res) => {
         console.log('Note Deleted')
+        success.value.message = res.data.message
     }).catch((err) => {
         error.value.message = err.response.data.error 
         error.value.cause = err.response.data.cause 
@@ -44,6 +49,7 @@ const deleteNote = (noteID) => {
 
 </script>
 <template>
+<Success v-if="success.message" :message="success.message"/>
 <Error v-if="error.message" :errorMessage="error.message" :errorCause="error.cause"/>
 <div v-for="note in notes">
     <hr>
