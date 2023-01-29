@@ -92,10 +92,25 @@ exports.updateUser = async (req, res) => {
 exports.deleteNote = async (req, res) => {
   try {
     await dbController.deleteClientNote(req.params.noteID)
-    res.status(204).json({
+    res.status(200).json({
       message: 'Note Deleted'
     })
   } catch (error) {
+    res.status(500).json({
+      error: error.message,
+      cause: error.cause
+    })
+  }
+}
+
+exports.deleteClient = async (req, res) => {
+  try {
+    await dbController.deleteClient(req.params.clientID)
+    res.status(200).json({
+      message: 'Client Deleted'
+    })
+  } catch (error) {
+    console.log(error.message)
     console.log(error.cause)
     res.status(500).json({
       error: error.message,
