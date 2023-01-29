@@ -31,7 +31,8 @@ exports.logIn = async (req, res) => {
     const user = await DATABASE.getUserByEmail(req.body.username);
     if (user === undefined) {
       res.status(401).json({
-        message: "Incorrect Username or Password",
+        error: "Could not log you in",
+        cause: 'Incorrect username or password'
       });
     } else {
       const passMatch = await bcrypt.compare(req.body.password, user.password);

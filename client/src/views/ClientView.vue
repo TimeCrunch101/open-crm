@@ -8,7 +8,10 @@ const auth = useAuthStore()
 const route = useRoute()
 
 const client = ref({})
-const error = ref({})
+const error = ref({
+    message: null,
+    cause: null
+})
 
 axios.get(`/api/get/client/${route.params.clientID}`,{
     headers: {
@@ -17,7 +20,7 @@ axios.get(`/api/get/client/${route.params.clientID}`,{
 }).then((res) => {
     client.value = res.data.client
 }).catch((err) => {
-    error.value.message = err.response.data.message
+    error.value.message = err.response.data.error
     error.value.cause = err.response.data.cause
 })
 
@@ -25,7 +28,7 @@ axios.get(`/api/get/client/${route.params.clientID}`,{
 </script>
 
 <template>
-<Error v-if="error.message" :errorMessage="error.message" />
+<Error v-if="error.message" :errorMessage="error.message" :errorCause="error.cause"/>
 <div class="container mt-2">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">

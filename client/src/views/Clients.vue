@@ -5,7 +5,10 @@ import { ref } from 'vue';
 import Error from '../components/alerts/Error.vue'
 const auth = useAuthStore()
 
-const error = ref({})
+const error = ref({
+    message: null,
+    cause: null
+})
 const clients = ref([])
 const token = ref(auth.getToken)
 
@@ -23,7 +26,7 @@ axios.get("/api/get/clients", {
 </script>
 
 <template>
-    <Error v-if="error.message" :errorMessage="error.message" />
+    <Error v-if="error.message" :errorMessage="error.message" :errorCause="error.cause"/>
     <div class="container mt-5">
         <table class="table">
             <thead>

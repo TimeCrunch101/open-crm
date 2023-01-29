@@ -6,7 +6,10 @@ import Error from "../components/alerts/Error.vue"
 
 const auth = useAuthStore()
 const users = ref([])
-const error = ref({})
+const error = ref({
+    message: null,
+    cause: null
+})
 const token = ref(auth.getToken)
 
 axios.get("/api/get/users", {
@@ -16,12 +19,13 @@ axios.get("/api/get/users", {
 }).then((res) => {
     users.value = res.data.usersArray
 }).catch((err) => {
-    error.value = err.response.data
+    error.value.message = err.response.data.error
+    error.value.message = err.response.data.cause
 })
 </script>
 
 <template>
-    <Error v-if="error.message" :errorMessage="error.message" />
+    <Error v-if="error.message" :errorMessage="error.message" :errorCause="error.cause" />
     <h1>Users</h1>
     <div class="container">
         <table class="table table-dark table-striped">

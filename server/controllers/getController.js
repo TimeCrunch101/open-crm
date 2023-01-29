@@ -24,7 +24,7 @@ exports.getAllClients = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({
-      message: error.message,
+      error: error.message,
       cause: error.cause,
     });
   }
@@ -38,7 +38,7 @@ exports.getClient = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({
-      message: error.message,
+      error: error.message,
       cause: error.cause,
     });
   }
