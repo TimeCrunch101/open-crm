@@ -1,15 +1,16 @@
 <script setup>
 const props = defineProps({
-    errorMessage: String
+    errorMessage: String,
+    errorCause: String
 })
 
 </script>
 
 <template>
-    <div class="alert alert-danger d-flex align-items-center mt-3" role="alert">
+    <div class="alert alert-danger d-flex align-items-center m-auto" role="alert">
         <i class="bi bi-exclamation-triangle-fill"></i>
         <div>
-            {{ errorMessage }}
+           ERROR: {{ errorMessage }}, CAUSE: {{ errorCause }}
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
@@ -18,7 +19,6 @@ const props = defineProps({
 
 <style scoped>
 div {
-    width: max-content;
-    margin: auto;
+    width: fit-content;
 }
 </style>
