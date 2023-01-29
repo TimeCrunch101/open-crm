@@ -41,7 +41,7 @@ const createNote = () => {
     <form @submit.prevent="createNote()">
         <div class="form-floating">
             <textarea class="form-control" id="note" style="height: 100px" v-model="form.note"></textarea>
-            <label for="floatingTextarea2">Comments</label>
+            <label for="floatingTextarea2">Note</label>
         </div>
         <button type="submit" class="btn btn-outline-primary mt-1">Add Note</button>
     </form>
