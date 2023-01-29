@@ -20,7 +20,7 @@ app.use((req, res, next) => {
     next()
 })
 app.use(cors({
-	origin: 'http://127.0.0.1:5173',
+	origin: 'http://localhost:5173',
 	credentials: true
 }))
 
@@ -29,6 +29,6 @@ app.use('/api', apiLimiter)
 initGetRouter(app)
 initPostRouter(app)
 
-if (process.env.NODE_ENV === 'production') console.log('PRODUCTION')
+if (process.env.NODE_ENV === 'production') console.info('PRODUCTION')
 
-app.listen(8080, console.log(`API: http://localhost:8080`))
+app.listen(8080, console.info(`API: http://localhost:8080`))

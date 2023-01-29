@@ -36,7 +36,7 @@ axios.get("/api/get/users", {
                 <tr v-for="user in users">
                     <td scope="row">{{ user.fullName }}</td>
                     <td>{{ user.email }}</td>
-                    <th>{{ user.uuid }}</th>
+                    <th>{{ user.userID }}</th>
                 </tr>
             </tbody>
         </table>

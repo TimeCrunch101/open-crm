@@ -1,4 +1,4 @@
-import { nextTick } from "vue";
+// import { nextTick } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
 import { useAuthStore } from "../stores/auth";
 
@@ -17,20 +17,32 @@ const router = createRouter({
       beforeEnter: () => {},
     },
     {
+      path: "/clients",
+      name: "Clients",
+      component: () => import("../views/Clients.vue"),
+    },
+    {
       path: "/login",
       name: "Login",
       component: () => import("../views/Login.vue"),
+    },
+    {
+      path: "/client/:clientID",
+      name: "Client",
+      component: () => import("../views/ClientView.vue"),
+    },
+    {
+      path: "/create/client",
+      name: "Create Client",
+      component: () => import("../views/CreateClient.vue"),
     },
   ],
 });
 
 router.beforeEach(async (to, from, next) => {
-  const isValid = await useAuthStore().validate()
-  if (to.name !== "Login" && isValid === false) next({name: 'Login'})
-  else next()
-})
-
-
+  const isValid = await useAuthStore().validate();
+  if (to.name !== "Login" && isValid === false) next({ name: "Login" });
+  else next();
+});
 
 export default router;
-

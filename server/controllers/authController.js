@@ -38,13 +38,13 @@ exports.logIn = async (req, res) => {
       if (passMatch) {
         const token = jwt.sign(
           {
-            uuid: user.uuid,
+            userID: user.userID,
             firstName: user.firstName,
             lastName: user.lastName,
             fullName: user.fullName,
             email: user.email,
           },
-          process.env.JWT_SKEY,
+          process.env.JWT_SKEY
           //{ expiresIn: "15s" } // TODO: Update for production
         );
 
@@ -87,7 +87,7 @@ exports.register = async (req, res) => {
 // getRouter.get("/api/validate", auth.isAuthenticated, auth.validate);
 // On protected routes in the Vue application, a validation check is preformed.
 // If auth.isAuthenticated succeeds then this will be called.
-exports.validate = (req, res) => { 
+exports.validate = (req, res) => {
   res.status(200).json({
     validation: true,
   });

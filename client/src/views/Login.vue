@@ -31,13 +31,11 @@ const login = () => {
         <div class="container mt-5">
             <h3 class="text-center">LOGIN</h3>
             <div class="form-floating mb-2">
-                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"
-                    v-model="form.username">
+                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" v-model="form.username">
                 <label for="floatingInput">Email address</label>
             </div>
             <div class="form-floating">
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Password"
-                    v-model="form.password">
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Password" v-model="form.password">
                 <label for="floatingPassword">Password</label>
             </div>
             <button class="btn btn-outline-success mt-3" type="submit">Submit</button>
