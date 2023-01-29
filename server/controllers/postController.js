@@ -34,7 +34,7 @@ exports.createClientNote = async (req, res) => {
       data: req.body.note,
       timestamp: new Date(),
       author: res.user.fullName,
-      client: req.body.client,
+      client: req.body.clientID,
     });
     res.status(201).json({
       message: "Note Added",
@@ -88,3 +88,18 @@ exports.updateUser = async (req, res) => {
     });
   }
 };
+
+exports.deleteNote = async (req, res) => {
+  try {
+    await dbController.deleteClientNote(req.params.noteID)
+    res.status(204).json({
+      message: 'Note Deleted'
+    })
+  } catch (error) {
+    console.log(error.cause)
+    res.status(500).json({
+      error: error.message,
+      cause: error.cause
+    })
+  }
+}

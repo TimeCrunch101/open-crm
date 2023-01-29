@@ -16,9 +16,7 @@ test('Get User By Email', async () => {
     expect(res.email).toEqual('TEST1@TEST1.COM1')
 })
 
-// TODO: TEST disableUser
-
-// FIXME: This is broken
+// FIXME: [TEST] This is broken
 test('Update User', async () => { 
     const res = await DATABASE.updateUser(12, {
         firstName: 'Test1',
@@ -33,8 +31,6 @@ test('Delete User', async () => {
     const res = await DATABASE.deleteUser("123")
     expect(res).toEqual(true)
 })
-
-// TODO: TEST createClient
 
 test('Create Client', async () => {
     const res = await DATABASE.createClient({
@@ -51,8 +47,6 @@ test('Create Client', async () => {
     expect(res).toEqual(true)
 })
 
-// TODO: TEST getClients
-
 test('Get Clients', async () => {
     const res = await DATABASE.getClients()
     expect(res.length).toBeGreaterThanOrEqual(0)
@@ -63,21 +57,3 @@ test('Delete Client', async () => {
     const res = await DATABASE.deleteClient(id.id)
     expect(res).toEqual(true)
 })
-
-// TODO: TEST updateClient
-
-// TODO: TEST createClientContact
-
-// TODO: TEST getClientContacts
-
-// TODO: TEST updateClientContact
-
-// TODO: TEST DeleteClientContact
-
-// TODO: TEST createClientNote
-
-// TODO: TEST getClientNotes
-
-// TODO: TEST updateClientNote
-
-// TODO: TEST DeleteClientNote

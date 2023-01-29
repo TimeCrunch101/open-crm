@@ -76,17 +76,10 @@ exports.register = (
       (err) => {
         try {
           if (err) {
-            if (
-              err.message ===
-              `Duplicate entry '${email}' for key 'users.email_UNIQUE'`
-            ) {
-              throw new Error("Could not create user in database", {
-                cause: "That email is already in use",
-              });
+            if (err.message === `Duplicate entry '${email}' for key 'users.email_UNIQUE'`) {
+              throw new Error("Could not create user in database", {cause: "That email is already in use",});
             } else {
-              throw new Error("Could not create user in database", {
-                cause: err.message,
-              });
+              throw new Error("Could not create user in database", {cause: err.message,});
             }
           }
           resolve(true);
@@ -156,7 +149,7 @@ exports.deleteUser = (uuid) => {
   return new Promise((resolve, reject) => {
     DB.query("DELETE FROM users WHERE uuid = ?", [uuid], (err) => {
       try {
-        if (err) throw err; // TODO: Create an error message
+        if (err) throw new Error('Could not delete user', {cause: err.message})
         resolve(true);
       } catch (error) {
         reject(error);
@@ -316,7 +309,6 @@ exports.createClientContact = (contact) => {
 };
 
 /**
- *
  * @param {string} clientID The UUID of the client
  * @returns
  */
@@ -343,7 +335,24 @@ exports.getAllClientContacts = (clientID) => {
 
 // TODO: updateClientContact()
 
-// TODO: DeleteClientContact()
+/**
+ * 
+ * @param {string} contactID 
+ * @returns A promise, resolves true if successful, rejects with an error Object if the query failed
+ */
+
+exports.DeleteClientContact = (contactID) => {
+  return new Promise((resolve, reject) => {
+    DB.query("DELETE FROM contacts WHERE contactID = ?",[contactID],(err) => {
+      try {
+        if (err) throw new Error('Could not delete contact', {cause: err.message})
+        resolve(true)
+      } catch (error) {
+        reject(false)
+      }
+    })
+  })
+}
 
 /**
  * @param {object} note The Note Object
@@ -406,4 +415,39 @@ exports.getClientNotes = (clientID) => {
 
 // TODO: updateClientNote()
 
-// TODO: DeleteClientNote()
+/**
+ * @param {string} noteID 
+ * @returns A promise, resolves true if successful, rejects with an error Object if the query failed
+ */
+
+exports.deleteClientNote = (noteID) => {
+  return new Promise((resolve, reject) => {
+    DB.query("DELETE FROM client_notes WHERE noteID = ?",[noteID],(err) => {
+      try {
+        if (err) throw new Error('Could not delete note', {cause: err.message})
+        resolve(true)
+      } catch (error) {
+        reject(error)
+      }
+    })
+  })
+}
+
+/**
+ * 
+ * @param {string} noteID 
+ * @returns A promise, resolves true if successful, rejects with an error Object if the query failed
+ */
+
+exports.DeleteClientNote = (noteID) => {
+  return new Promise((resolve, reject) => {
+    DB.query("DELETE FROM client_notes WHERE noteID = ?",[noteID],(err) => {
+      try {
+        if (err) throw new Error("Could not delete note", {cause: err.cause})
+        resolve(true)
+      } catch (error) {
+        reject(false)
+      }
+    })
+  })
+}

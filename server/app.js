@@ -24,7 +24,7 @@ app.use(cors({
 	credentials: true
 }))
 
-app.use('/api', apiLimiter)
+// app.use('/api', apiLimiter)
 
 initGetRouter(app)
 initPostRouter(app)
