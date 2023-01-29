@@ -256,13 +256,10 @@ exports.deleteClient = (clientID) => {
   return new Promise((resolve, reject) => {
     DB.query("DELETE FROM clients WHERE clientID = ?", [clientID], (err) => {
       try {
-        if (err)
-          throw new Error("Could not delete the client", {
-            cause: err.message,
-          });
+        if (err) throw new Error("Could not delete the client", {cause: err.message,});
         resolve(true);
       } catch (error) {
-        reject(err);
+        reject(error);
       }
     });
   });
