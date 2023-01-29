@@ -2,9 +2,15 @@
 import axios from 'axios';
 import { ref } from 'vue';
 import { useAuthStore } from '../stores/auth';
+import Success from '../components/alerts/Success.vue';
+import Error from '../components/alerts/Error.vue';
 const auth = useAuthStore()
 
-const token = ref(auth.getToken)
+const successMessage = ref(null)
+const error = ref({
+    message: null,
+    cause: null
+})
 
 const form = ref({
     companyName: null,
@@ -21,32 +27,35 @@ const form = ref({
 const createClient = () => {
     axios.put("/api/create/client",{
         companyName: form.value.companyName,
-        companyName: form.value.street,
-        companyName: form.value.city,
-        companyName: form.value.state,
-        companyName: form.value.zip,
-        companyName: form.value.country,
-        companyName: form.value.primaryPhone,
-        companyName: form.value.fax,
-        companyName: form.value.website,
+        street: form.value.street,
+        city: form.value.city,
+        state: form.value.state,
+        zip: form.value.zip,
+        country: form.value.country,
+        primaryPhone: form.value.primaryPhone,
+        fax: form.value.fax,
+        website: form.value.website,
     },{
     headers: {
         Authorization: `Bearer ${auth.getToken}`
     }
 }).then((res) => {
-    console.log(res.data.message)
+    successMessage.value = res.data.message
     }).catch((err) => {
-        console.error(err.response.data)
+
+        error.value.message = err.response.data.error
+        error.value.cause = err.response.data.cause
     })
 }
 
 
 </script>
 <template>
+    <Success v-if="successMessage" :message="successMessage" />
+    <Error v-if="error.message" :errorMessage="error.message" :errorCause="error.cause"/>
     <h1>Create Client</h1>
     <div class="container">
         <form @submit.prevent="createClient()">
-
             <label for="companyName" class="form-label">Company Name</label>
             <input type="text" name="companyName" id="companyName" class="form-control form-control-sm" v-model="form.companyName" required>
 
