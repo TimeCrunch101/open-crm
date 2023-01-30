@@ -31,10 +31,7 @@ const logout = () => {
             <router-link class="nav-link" to="/users">Users</router-link>
           </li>
           <li class="nav-item dropdown">
-            <router-link class="nav-link dropdown-toggle" to="#" role="button" data-bs-toggle="dropdown"
-              aria-expanded="false">
-              Create
-            </router-link>
+            <router-link class="nav-link dropdown-toggle" to="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Create</router-link>
             <ul class="dropdown-menu">
               <li><router-link class="dropdown-item" to="/create/client">New Client</router-link></li>
               <li><router-link class="dropdown-item" to="#">New User</router-link></li>
@@ -45,7 +42,7 @@ const logout = () => {
             </ul>
           </li>
           <li class="nav-item">
-            <button @click="logout()" class="btn btn-primary" type="button">Logout</button>
+            <router-link @click="logout()" class="nav-link" aria-current="page" to="/login">Logout</router-link>
           </li>
         </ul>
         <form class="d-flex" role="search">
