@@ -8,7 +8,7 @@ const app = express()
 
 const apiLimiter = rateLimit({
 	windowMs: 15 * 60 * 1000, // 15 minutes
-	max: 1000, // TODO: update for production
+	max: 200,
 	standardHeaders: true,
 	legacyHeaders: false,
 })
@@ -20,11 +20,13 @@ app.use((req, res, next) => {
     next()
 })
 app.use(cors({
-	origin: 'http://localhost:5173',
+	origin: 'http://127.0.0.1:5173',
 	credentials: true
 }))
 
-// app.use('/api', apiLimiter)
+if (process.env.NODE_ENV === 'production') {
+	app.use('/api', apiLimiter)
+}
 
 initGetRouter(app)
 initPostRouter(app)
