@@ -42,7 +42,7 @@ const logout = () => {
             </ul>
           </li>
           <li class="nav-item">
-            <button @click="logout()" class="btn btn-primary" type="button">Logout</button>
+            <router-link @click="logout()" class="nav-link" aria-current="page" to="/login">Logout</router-link>
           </li>
         </ul>
         <form class="d-flex" role="search">
