@@ -11,10 +11,12 @@ export const useAuthStore = defineStore("auth", {
       if (store.token === null) return false
       else return true
     },
-    
     getToken: (store) => {
       return store.token;
     },
+    getUser: (store) => {
+      return store.fullName
+    }
   },
   actions: {
     setUserInfo(fullName, token) {
