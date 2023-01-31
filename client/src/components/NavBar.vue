@@ -49,9 +49,6 @@ const logout = () => {
               <li><router-link class="dropdown-item" to="#">Something else here</router-link></li>
             </ul>
           </li>
-          <li class="nav-item">
-            <router-link @click="logout()" class="nav-link" aria-current="page" to="/login">Logout</router-link>
-          </li>
         </ul>
         <form class="d-flex" role="search">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -64,6 +61,12 @@ const logout = () => {
           <ul class="dropdown-menu dropdown-menu-start">
             <li><a class="dropdown-item" href="#">Account Settings</a></li>
             <li><router-link class="dropdown-item" to="/users">CRM Admin</router-link></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li class="dropdown-item">
+              <router-link @click="logout()" class="nav-link" aria-current="page" to="/login">Logout</router-link>
+            </li>
           </ul>
         </div>
       </div>
