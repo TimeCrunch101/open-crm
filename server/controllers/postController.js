@@ -110,8 +110,6 @@ exports.deleteClient = async (req, res) => {
       message: 'Client Deleted'
     })
   } catch (error) {
-    console.log(error.message)
-    console.log(error.cause)
     res.status(500).json({
       error: error.message,
       cause: error.cause
