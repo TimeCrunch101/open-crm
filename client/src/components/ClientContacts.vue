@@ -19,7 +19,6 @@ axios.get(`/api/get/client/contacts/${props.clientID}`, {
         Authorization: `Bearer ${props.token}`
     }
 }).then((res) => {
-    console.log(res.data.contacts)
     contacts.value = res.data.contacts
 }).catch((err) => {
     error.value.message = err.response.data.error

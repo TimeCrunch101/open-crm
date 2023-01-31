@@ -37,7 +37,6 @@ const deleteNote = (noteID) => {
             Authorization: `Bearer ${props.token}`
         }
     }).then((res) => {
-        console.log('Note Deleted')
         success.value.message = res.data.message
     }).catch((err) => {
         error.value.message = err.response.data.error 
