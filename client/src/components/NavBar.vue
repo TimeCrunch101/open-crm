@@ -1,24 +1,23 @@
 <script setup>
 import { useAuthStore } from '../stores/auth';
 import { useRouter } from 'vue-router';
-import { ref } from 'vue'
-const auth = useAuthStore()
-const router = useRouter()
+import { ref } from 'vue';
 
-const initials = ref(null)
+const auth = useAuthStore();
+const router = useRouter();
+const initials = ref(null);
 
 if (auth.getUser) {
-  const nameArray = auth.getUser.split(" ", [2])
-  const firstInitial = nameArray[0].charAt(0)
-  const lastInitial = nameArray[1].charAt(0)
-  initials.value = firstInitial + lastInitial
-}
+  const nameArray = auth.getUser.split(" ", [2]);
+  const firstInitial = nameArray[0].charAt(0);
+  const lastInitial = nameArray[1].charAt(0);
+  initials.value = firstInitial + lastInitial;
+};
 
 const logout = () => {
-  auth.logoutUser()
-  router.push('/login')
-}
-
+  auth.logoutUser();
+  router.push('/login');
+};
 </script>
 
 <template>
@@ -74,17 +73,13 @@ const logout = () => {
   </nav>
 </template>
 
-
-
-
-
 <style scoped>
 .profile-picture {
   margin-left: 1em;
   outline: 1px solid rgb(0, 0, 0);
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
 
   display: flex;
   justify-content: center;
@@ -98,9 +93,9 @@ const logout = () => {
 }
 
 .profile-initials {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   vertical-align: center;
-  margin-bottom: 5px;
+  margin-bottom: 4px;
 }
 
 .dropstart .dropdown-menu {
