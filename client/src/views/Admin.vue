@@ -5,6 +5,7 @@ import Error from "../components/alerts/Error.vue"
 import AdminUsers from '../components/admin/AdminUsers.vue';
 import NewUserModal from "../components/admin/modals/NewUserModal.vue"
 import Success from '../components/alerts/Success.vue';
+import AdminCreateClient from '../components/admin/AdminCreateClient.vue';
 
 const successMsg = ref()
 const auth = useAuthStore()
@@ -30,18 +31,21 @@ const setSucMsg = (successObj) => {
     <div class="container mt-3">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="users-tab" data-bs-toggle="tab" data-bs-target="#users-tab-pane"
-                    type="button" role="tab" aria-controls="users-tab-pane" aria-selected="true">Users</button>
+                <button class="nav-link active" id="users-tab" data-bs-toggle="tab" data-bs-target="#users-tab-pane" type="button" role="tab" aria-controls="users-tab-pane" aria-selected="true">Users</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="clients-tab" data-bs-toggle="tab" data-bs-target="#clients-tab-pane" type="button" role="tab" aria-controls="clients-tab-pane" aria-selected="true">Clients</button>
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="users-tab-pane" role="tabpanel" aria-labelledby="users-tab"
-                tabindex="0">
-                <!-- <button type="button" class="btn btn-outline-success mt-3">New User</button> -->
+            <div class="tab-pane fade show active" id="users-tab-pane" role="tabpanel" aria-labelledby="users-tab" tabindex="0">
                 <button type="button" class="btn btn-outline-success mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     Add User
                 </button>
                 <AdminUsers @success-message="setSucMsg" @error-message="setErrMsg" :token="token" />
+            </div>
+            <div class="tab-pane fade" id="clients-tab-pane" role="tabpanel" aria-labelledby="clients-tab" tabindex="1">
+                <AdminCreateClient/>
             </div>
         </div>
     </div>
