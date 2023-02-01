@@ -53,7 +53,7 @@ exports.getUserByEmail = (email) => {
  * @returns true if the user was created, rejects with new Error()
  */
 
-exports.register = (
+exports.createUser = (
   userID,
   firstName,
   lastName,
@@ -141,22 +141,22 @@ exports.updateUser = (id, user) => {
 };
 
 /**
- * @param {string} uuid The users Unique ID
+ * @param {string} userID The ID of the user
  * @returns A promise, resolves true if successful, rejects with an error Object if the query failed
  */
 
-exports.deleteUser = (uuid) => {
+exports.deleteUser = (userID) => {
   return new Promise((resolve, reject) => {
-    DB.query("DELETE FROM users WHERE uuid = ?", [uuid], (err) => {
+    DB.query("DELETE FROM users WHERE userID = ?",[userID],(err) => {
       try {
-        if (err) throw new Error('Could not delete user', {cause: err.message})
-        resolve(true);
+        if (err) throw new Error('Could not delete user', {cause: err.cause})
+        resolve(true)
       } catch (error) {
-        reject(error);
+        reject(error)
       }
-    });
-  });
-};
+    })
+  })
+}
 
 /**
  * @param {object} company
@@ -431,7 +431,6 @@ exports.deleteClientNote = (noteID) => {
 }
 
 /**
- * 
  * @param {string} noteID 
  * @returns A promise, resolves true if successful, rejects with an error Object if the query failed
  */

@@ -67,15 +67,15 @@ exports.logIn = async (req, res) => {
   }
 };
 
-exports.register = async (req, res) => {
+exports.createUser = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
   const hash = bcrypt.hashSync(password, 10);
   const fullName = `${firstName} ${lastName}`;
   const uuid = uuidv4();
   try {
-    await DATABASE.register(uuid, firstName, lastName, fullName, email, hash);
+    await DATABASE.createUser(uuid, firstName, lastName, fullName, email, hash);
     res.status(200).json({
-      message: "You have successfully registered",
+      message: "User Created",
     });
   } catch (error) {
     res.status(500).json({

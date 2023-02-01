@@ -116,3 +116,17 @@ exports.deleteClient = async (req, res) => {
     })
   }
 }
+
+exports.deleteUser = async (req, res) => {
+  try {
+    await dbController.deleteUser(req.params.userID)
+    res.status(200).json({
+      message: 'User Deleted'
+    })
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+      cause: error.cause
+    })
+  }
+}
