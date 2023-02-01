@@ -23,7 +23,7 @@ const logout = () => {
 <template>
   <nav v-if="auth.isAuthenticated" class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-      <router-link class="navbar-brand" to="#">Navbar</router-link>
+      <router-link class="navbar-brand" to="#">OpenCRM</router-link>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -59,7 +59,7 @@ const logout = () => {
           </div>
           <ul class="dropdown-menu dropdown-menu-start">
             <li><a class="dropdown-item" href="#">Account Settings</a></li>
-            <li><router-link class="dropdown-item" to="/users">CRM Admin</router-link></li>
+            <li><router-link class="dropdown-item" to="/admin">CRM Admin</router-link></li>
             <li>
               <hr class="dropdown-divider">
             </li>
