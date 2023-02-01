@@ -26,19 +26,6 @@ axios.get("/api/get/clients", {
     error.value.cause = err.response.data.cause
 })
 
-const deleteClient = (clientID) => {
-    axios.delete(`/api/delete/client/${clientID}`,{
-        headers: {
-            Authorization: `Bearer ${token.value}`
-        }
-    }).then((res) => {
-        success.value.message = res.data.message
-    }).catch((err) => {
-        error.value.message = err.response.data.error
-        error.value.cause = err.response.data.cause
-    })
-}
-
 </script>
 
 <template>
@@ -51,7 +38,6 @@ const deleteClient = (clientID) => {
                     <th scope="col">Client</th>
                     <th scope="col">Address</th>
                     <th scope="col">Phone Number</th>
-                    <th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -65,7 +51,6 @@ const deleteClient = (clientID) => {
                         {{ client.country }}
                     </td>
                     <td>{{ client.primaryPhone }}</td>
-                    <td><i @click="deleteClient(client.clientID)" class="bi bi-trash3-fill"></i></td>
                 </tr>
             </tbody>
         </table>
