@@ -40,7 +40,7 @@ const logout = () => {
             <router-link class="nav-link dropdown-toggle" to="#" role="button" data-bs-toggle="dropdown"
               aria-expanded="false">Create</router-link>
             <ul class="dropdown-menu">
-              <li><router-link class="dropdown-item" to="/create/client">New Client</router-link></li>
+              <!-- <li><router-link class="dropdown-item" to="/create/client">New Client</router-link></li> -->
               <li><router-link class="dropdown-item" to="#">New User</router-link></li>
               <li>
                 <hr class="dropdown-divider">
