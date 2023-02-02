@@ -1,9 +1,9 @@
 <script setup>
-import axios from 'axios';
-import { useAuthStore } from '../stores/auth';
+import axios from 'axios'
+import { useAuthStore } from '../../stores/auth';
 import { ref } from 'vue';
-import Error from '../components/alerts/Error.vue'
-import Success from '../components/alerts/Success.vue';
+import Error from '../alerts/Error.vue';
+import Success from '../alerts/Success.vue';
 const auth = useAuthStore()
 const success = ref({
     message: null
@@ -27,7 +27,6 @@ axios.get("/api/get/clients", {
 })
 
 </script>
-
 <template>
     <Success v-if="success.message" :message="success.message"/>
     <Error v-if="error.message" :errorMessage="error.message" :errorCause="error.cause"/>
@@ -42,7 +41,7 @@ axios.get("/api/get/clients", {
             </thead>
             <tbody>
                 <tr v-for="client in clients">
-                    <td><router-link :to="'/client/' + client.clientID">{{ client.companyName }}</router-link></td>
+                    <td>{{ client.companyName }}</td>
                     <td>
                         {{ client.street }}
                         {{ client.city }},
@@ -54,11 +53,5 @@ axios.get("/api/get/clients", {
                 </tr>
             </tbody>
         </table>
-    </div>
+    </div>   
 </template>
-
-<style scoped>
-.bi-trash3-fill:hover {
-    cursor: pointer;
-}
-</style>

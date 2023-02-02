@@ -28,13 +28,6 @@ axios.get(`/api/get/client/${route.params.clientID}`, {
     error.value.cause = err.response.data.cause
 })
 
-
-// onBeforeMount(() => {
-//     fetchData()
-// })
-
-
-
 </script>
 
 <template>
