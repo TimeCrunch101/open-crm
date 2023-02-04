@@ -31,17 +31,17 @@ axios.get(`/api/get/client/contacts/${props.clientID}`, {
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">ID</th>
                 <th scope="col">First</th>
                 <th scope="col">Last</th>
+                <th scope="col">Email</th>
                 <th scope="col">Primary Phone</th>
             </tr>
         </thead>
         <tbody>
             <tr v-for="contact in contacts">
-                <th scope="row">{{ contact.contactID }}</th>
                 <td>{{ contact.firstName }}</td>
                 <td>{{ contact.lastName }}</td>
+                <th><a :href="`mailto:${contact.email}`">{{ contact.email }}</a></th>
                 <td>{{ contact.primaryPhone }}</td>
             </tr>
         </tbody>
