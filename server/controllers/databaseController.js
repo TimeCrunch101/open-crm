@@ -273,6 +273,7 @@ exports.deleteClient = (clientID) => {
  * @param {string} contact.firstName
  * @param {string} contact.lastName
  * @param {string} contact.fullName
+ * @param {string} contact.email
  * @param {string} contact.primaryPhone
  * @param {string} contact.cellPhone
  * @param {number} contact.client
@@ -288,6 +289,7 @@ exports.createClientContact = (contact) => {
         firstName: contact.firstName,
         lastName: contact.lastName,
         fullName: contact.fullName,
+        email: contact.email,
         primaryPhone: contact.primaryPhone,
         cellPhone: contact.cellPhone,
         client: contact.client,
