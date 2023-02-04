@@ -53,6 +53,9 @@ axios.get(`/api/get/client/${route.params.clientID}`, {
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="tickets-tab" data-bs-toggle="tab" data-bs-target="#tickets-tab-pane" type="button" role="tab" aria-controls="tickets-tab-pane" aria-selected="false">Tickets</button>
             </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="projects-tab" data-bs-toggle="tab" data-bs-target="#projects-tab-pane" type="button" role="tab" aria-controls="projects-tab-pane" aria-selected="false">Projects</button>
+            </li>
         </ul>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="main-tab-pane" role="tabpanel" aria-labelledby="main-tab" tabindex="0">
@@ -69,6 +72,9 @@ axios.get(`/api/get/client/${route.params.clientID}`, {
             </div>
             <div class="tab-pane fade" id="tickets-tab-pane" role="tabpanel" aria-labelledby="tickets-tab" tabindex="0">
                 <p>Tickets</p>
+            </div>
+            <div class="tab-pane fade" id="projects-tab-pane" role="tabpanel" aria-labelledby="projects-tab" tabindex="0">
+                <p>Projects</p>
             </div>
         </div>
     </div>
