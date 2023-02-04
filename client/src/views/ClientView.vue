@@ -1,6 +1,6 @@
 <script setup>
 import axios from 'axios';
-import { ref, defineAsyncComponent, onBeforeMount } from 'vue';
+import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useAuthStore } from '../stores/auth';
 import Error from "../components/alerts/Error.vue"
