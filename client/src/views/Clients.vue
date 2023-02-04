@@ -31,6 +31,9 @@ axios.get("/api/get/clients", {
 <template>
     <Success v-if="success.message" :message="success.message"/>
     <Error v-if="error.message" :errorMessage="error.message" :errorCause="error.cause"/>
+
+
+
     <div class="container mt-5">
         <table class="table">
             <thead>
@@ -55,6 +58,18 @@ axios.get("/api/get/clients", {
             </tbody>
         </table>
     </div>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        </ul>
+    </nav>
+
+
 </template>
 
 <style scoped>
