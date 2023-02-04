@@ -54,6 +54,7 @@ exports.createClientContact = async (req, res) => {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       fullName: `${req.body.firstName} ${req.body.lastName}`,
+      email: req.body.email,
       primaryPhone: req.body.primaryPhone,
       cellPhone: req.body.cellPhone,
       client: req.body.client,
