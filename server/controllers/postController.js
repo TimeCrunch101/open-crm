@@ -131,3 +131,31 @@ exports.deleteUser = async (req, res) => {
     })
   }
 }
+
+exports.disableUser = async (req, res) => {
+  try {
+    await dbController.disableUser(req.params.userID)
+    res.status(200).json({
+      message: 'User Disabled'
+    })
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+      cause: error.cause
+    })
+  }
+}
+
+exports.enableUser = async (req, res) => {
+  try {
+    await dbController.enableUser(req.params.userID)
+    res.status(200).json({
+      message: 'User Enabled'
+    })
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+      cause: error.cause
+    })
+  }
+}
