@@ -9,6 +9,8 @@ const initPostRouter = (app) => {
     postRouter.put("/api/create/user", auth.isAuthenticated, auth.createUser)
     postRouter.put("/api/create/client", auth.isAuthenticated, postController.createClient)
     postRouter.patch("/api/update/user/:userID", auth.isAuthenticated, postController.updateUser)
+    postRouter.patch("/api/disable/user/:userID", auth.isAuthenticated, postController.disableUser)
+    postRouter.patch("/api/enable/user/:userID", auth.isAuthenticated, postController.enableUser)
     postRouter.put("/api/create/client/note", auth.isAuthenticated, postController.createClientNote)
     postRouter.put("/api/create/client/contact", auth.isAuthenticated, postController.createClientContact)
     postRouter.delete("/api/delete/note/:noteID", auth.isAuthenticated, postController.deleteNote)

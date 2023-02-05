@@ -7,7 +7,7 @@ const { DB } = require("../config/db");
 exports.getAllUsers = () => {
   return new Promise((resolve, reject) => {
     DB.query(
-      "SELECT userID, firstName, lastName, fullName, email FROM users",
+      "SELECT userID, firstName, lastName, fullName, email, enabled FROM users",
       (err, data) => {
         try {
           if (err)
@@ -30,10 +30,8 @@ exports.getUserByEmail = (email) => {
   return new Promise((resolve, reject) => {
     DB.query("SELECT * FROM users WHERE email = ?", [email], (err, user) => {
       try {
-        if (err)
-          throw new Error("Could not retrieve the user", {
-            cause: err.message,
-          });
+        if (err) throw new Error("Could not retrieve the user", {cause: err.message,});
+        if (user[0].enabled===0) throw new Error('Could not login', {cause: "Please contact your administrator"})
         resolve(user[0]);
       } catch (err) {
         reject(err);
@@ -92,13 +90,13 @@ exports.createUser = (
 };
 
 /**
- * @param {number} id The ID of the user
+ * @param {string} userID The ID of the user
  * @returns A promise, resolves true if successful, rejects with an error Object if the query failed
  */
 
-exports.disableUser = (id) => {
+exports.disableUser = (userID) => {
   return new Promise((resolve, reject) => {
-    DB.query("UPDATE users SET enabled = 0 WHERE id = ?", [id], (err) => {
+    DB.query("UPDATE users SET enabled = 0 WHERE userID = ?", [userID], (err) => {
       try {
         if (err)
           throw new Error("Could not disable user", { cause: err.message });
@@ -109,6 +107,24 @@ exports.disableUser = (id) => {
     });
   });
 };
+
+/**
+ * @param {string} userID The ID of the user
+ * @returns A promise, resolves true if successful, rejects with an error Object if the query failed
+ */
+
+exports.enableUser = (userID) => {
+  return new Promise((resolve, reject) => {
+    DB.query("UPDATE users SET enabled = 1 WHERE userID = ?",[userID], (err) => {
+      try {
+        if (err) throw new Error('Could not enable user', {cause: err.message})
+        resolve(true)
+      } catch (error) {
+        reject(error)
+      }
+    })
+  })
+}
 
 /**
  * @param {number} id The ID of the user
