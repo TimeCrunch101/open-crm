@@ -1,9 +1,11 @@
 <script setup>
+import BarChart from "../components/BarChart.vue"
 
 </script>
 
 <template>
-    <h1>Dashboard</h1>
+    <p>Dashboard</p>
+    <BarChart />
 </template>
 
 <style scoped>
