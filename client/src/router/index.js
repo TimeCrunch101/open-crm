@@ -41,6 +41,11 @@ const router = createRouter({
       name: "Create Project",
       component: () => import("../views/CreateProject.vue"),
     },
+    {
+      path: "/my/workspace",
+      name: "My Workspace",
+      component: () => import("../views/MyWorkspace.vue"),
+    },
   ],
 });
 

@@ -1,8 +1,9 @@
 <script setup>
 import { useAuthStore } from '../stores/auth';
-import { useRouter } from 'vue-router';
-import { ref } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+import { ref, reactive, computed } from 'vue';
 
+const route = useRoute()
 const auth = useAuthStore();
 const router = useRouter();
 const initials = ref(null);
@@ -14,6 +15,16 @@ if (auth.getUser) {
   initials.value = firstInitial + lastInitial;
 };
 
+const activePage = computed(() => {
+  switch (route.path) {
+    case '/my/workspace':
+      return 'workspace'
+    case '/clients':
+      return 'client'
+  }
+  if (route.path.includes('/client/')) return 'client'
+})
+
 const logout = () => {
   auth.logoutUser();
   router.push('/login');
@@ -23,7 +34,7 @@ const logout = () => {
 <template>
   <nav v-if="auth.isAuthenticated" class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-      <router-link class="navbar-brand" to="#">OpenCRM</router-link>
+      <router-link class="navbar-brand" to="/">OpenCRM</router-link>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -31,10 +42,10 @@ const logout = () => {
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <router-link class="nav-link active" aria-current="page" to="/">Dashboard</router-link>
+            <router-link class="nav-link" :class="{active: activePage==='workspace'}" aria-current="page" to="/my/workspace">My Workspace</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" aria-current="page" to="/clients">Clients</router-link>
+            <router-link class="nav-link" :class="{active: activePage==='client'}" aria-current="page" to="/clients">Clients</router-link>
           </li>
           <li class="nav-item dropdown">
             <router-link class="nav-link dropdown-toggle" to="#" role="button" data-bs-toggle="dropdown"
@@ -97,5 +108,9 @@ const logout = () => {
 .dropstart .dropdown-menu {
   top: 57px;
   right: 0px
+}
+
+.navbar-nav .show > .nav-link, .navbar-nav .nav-link.active {
+  color: rgb(0, 155, 160);
 }
 </style>
