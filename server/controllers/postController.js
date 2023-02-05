@@ -47,6 +47,20 @@ exports.createClientNote = async (req, res) => {
   }
 };
 
+exports.pinClientNote = async (req, res) => {
+  try {
+    await dbController.pinClientNote(req.body.noteID,req.params.clientID)
+    res.status(200).json({
+      message: 'Successfully Pinned Note'
+    })
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+      cause: error.cause
+    })
+  }
+}
+
 exports.createClientContact = async (req, res) => {
   try {
     await dbController.createClientContact({

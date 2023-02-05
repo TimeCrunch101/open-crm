@@ -12,6 +12,9 @@ const auth = useAuthStore()
 const route = useRoute()
 const token = ref(auth.getToken)
 const client = ref({})
+const pinnedNote = ref({
+    note: null
+})
 const error = ref({
     message: null,
     cause: null
@@ -23,6 +26,9 @@ axios.get(`/api/get/client/${route.params.clientID}`, {
     }
 }).then((res) => {
     client.value = res.data.client
+    if (res.data.pinnedNote) {
+        pinnedNote.value = res.data.pinnedNote
+    }
 }).catch((err) => {
     error.value.message = err.response.data.error
     error.value.cause = err.response.data.cause
@@ -59,6 +65,9 @@ axios.get(`/api/get/client/${route.params.clientID}`, {
         </ul>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="main-tab-pane" role="tabpanel" aria-labelledby="main-tab" tabindex="0">
+                <div v-if="pinnedNote.note" class="pinned-note mt-3 mb-3">
+                    <p>{{ pinnedNote.note }}</p>
+                </div>
                 <p>Primary Number:<br /> {{ client.primaryPhone }}</p>
                 <p>Main Location:<br />{{ client.street }}<br />{{ client.city }} {{ client.state }} {{ client.zip }}<br />{{ client.country }}</p>
             </div>
@@ -79,3 +88,20 @@ axios.get(`/api/get/client/${route.params.clientID}`, {
         </div>
     </div>
 </template>
+
+<style scoped>
+.pinned-note {
+    outline: 2px solid orange;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 15px;
+    border-radius: 1em;
+    height: fit-content;
+    width: max-content;
+}
+.pinned-note > p {
+    margin-bottom: 0px;
+    margin-left: 1em;
+    color: orange;
+}
+</style>

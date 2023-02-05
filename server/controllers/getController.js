@@ -33,8 +33,10 @@ exports.getAllClients = async (req, res) => {
 exports.getClient = async (req, res) => {
   try {
     const client = await DATABASE.getClient(req.params.clientID);
+    const pinnedNote = await DATABASE.getClientPinnedNote(client.pinnedNote)
     res.status(200).json({
       client: client,
+      pinnedNote: pinnedNote
     });
   } catch (error) {
     res.status(500).json({

@@ -44,6 +44,20 @@ const deleteNote = (noteID) => {
     })
 }
 
+const pinNote = (noteID) => {
+    axios.patch(`/api/update/client/${props.clientID}/pinNote`,{
+        noteID: noteID
+    },{
+        headers: {
+            Authorization: `Bearer ${props.token}`
+        }
+    }).then((res) => {
+        success.value.message = res.data.message
+    }).catch((err) => {
+        console.log(err.response.data.error)
+        console.log(err.response.data.cause)
+    })
+}
 
 
 </script>
@@ -55,7 +69,10 @@ const deleteNote = (noteID) => {
     <p>{{ note.note }}</p>
     <p>TimeStamp: {{ note.timestamp }}</p>
     <p>Author: {{ note.author }}</p>
-    <button class="btn btn-outline-danger" @click="deleteNote(note.noteID)" type="button">delete</button>
+    <div class="button-div">
+        <button class="btn btn-outline-danger" @click="deleteNote(note.noteID)" type="button">delete</button>
+        <button class="btn btn-outline-success" @click="pinNote(note.noteID)">Pin</button>
+    </div>
 </div>
 </template>
 <style>
