@@ -264,6 +264,25 @@ exports.getClient = (clientID) => {
 };
 
 /**
+ * 
+ * @param {string} noteID The ID of the note
+ * @returns A promise, resolves true if successful, rejects with an error Object if the query failed
+ */
+
+exports.getClientPinnedNote = (noteID) => {
+  return new Promise((resolve, reject) => {
+    DB.query("SELECT * from client_notes WHERE noteID = ?",[noteID],(err, note) => {
+      try {
+        if (err) throw new Error('Could not get pinned note', {cause: err.message})
+        resolve(note[0])
+      } catch (error) {
+        reject(error)
+      }
+    })
+  })
+}
+
+/**
  * @param {string} clientID The ID of the client
  * @returns A promise, resolves true if successful, rejects with an error Object if the query failed
  */
@@ -427,6 +446,25 @@ exports.getClientNotes = (clientID) => {
     );
   });
 };
+
+/**
+ * @param {string} noteID The Note ID
+ * @param {string} clientID The Client ID
+ * @returns 
+ */
+
+exports.pinClientNote = (noteID, clientID) => {
+  return new Promise((resolve, reject) => {
+    DB.query("UPDATE clients SET pinnedNote = ? WHERE clientID = ?",[noteID, clientID], (err) => {
+      try {
+        if (err) throw new Error('Could not pin note', {cause: err.message})
+        resolve(true)
+      } catch (error) {
+        reject(error)
+      }
+    })
+  })
+}
 
 // TODO: updateClientNote()
 
