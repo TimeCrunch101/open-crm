@@ -31,11 +31,16 @@ const router = createRouter({
       name: "Client",
       component: () => import("../views/ClientView.vue"),
     },
-    // {
-    //   path: "/create/client",
-    //   name: "Create Client",
-    //   component: () => import("../views/CreateClient.vue"),
-    // },
+    {
+      path: "/create/ticket",
+      name: "Create Ticket",
+      component: () => import("../views/CreateTicket.vue"),
+    },
+    {
+      path: "/create/project",
+      name: "Create Project",
+      component: () => import("../views/CreateProject.vue"),
+    },
   ],
 });
 
