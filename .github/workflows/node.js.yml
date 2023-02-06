@@ -33,4 +33,4 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: cd ./client && npm ci && npm run build && cd ..
-    - run: pm2 start ./server/app.js && pm2 save -f
+    - run: pm2 restart 0 --update-env
