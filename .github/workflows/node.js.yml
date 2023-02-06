@@ -25,9 +25,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: export DB_NAME=${{secrets.DB_NAME}} && export HOST=${{secrets.HOST}}
-    - run: export JWT_SKEY=${{secrets.JWT_SKEY}} && export PASS=${{secrets.PASS}}
-    - run: export USER=${{secrets.USER}} && export NODE_ENV='production'
+    - run: pm2 stop 0 && pm2 delete 0
     - run: npm ci
     - run: cd ./client && npm ci && npm run build && cd ..
-    - run: pm2 restart 0 --update-env
+    - run: pm2 start ./server/app.js
