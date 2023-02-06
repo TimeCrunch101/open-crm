@@ -35,6 +35,9 @@ if (process.env.NODE_ENV === 'production') {
 	app.use('/api', apiLimiter)
 }
 
+initGetRouter(app)
+initPostRouter(app)
+
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(__dirname + '/public'))
   console.warn('PRODUCTION')
@@ -43,8 +46,6 @@ if (process.env.NODE_ENV === 'production') {
   })
 }
 
-initGetRouter(app)
-initPostRouter(app)
 
 if (process.env.NODE_ENV === 'production') console.info('PRODUCTION')
 
