@@ -19,13 +19,28 @@ app.use((req, res, next) => {
     res.locals.user = req.user
     next()
 })
-app.use(cors({
-	origin: 'http://127.0.0.1:5173',
-	credentials: true
-}))
+if (process.env.NODE_ENV === 'production') {
+  app.use(cors({
+    origin: 'http://127.0.0.1:5173',
+    credentials: true
+  }))
+} else {
+  app.use(cors({
+    origin: 'http://192.168.60.101',
+    credentials: true
+  }))
+}
 
 if (process.env.NODE_ENV === 'production') {
 	app.use('/api', apiLimiter)
+}
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(__dirname + '/public'))
+  console.warn('PRODUCTION')
+  app.get(/.*/, (req, res) => {
+    res.sendFile(__dirname + '/public/index.html')
+  })
 }
 
 initGetRouter(app)
