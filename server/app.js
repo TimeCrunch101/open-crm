@@ -26,7 +26,7 @@ if (process.env.NODE_ENV === 'production') {
   }))
 } else {
   app.use(cors({
-    origin: 'http://192.168.60.101',
+    origin: 'http://192.168.60.101:8080',
     credentials: true
   }))
 }
