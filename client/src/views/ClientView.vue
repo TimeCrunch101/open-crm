@@ -7,6 +7,7 @@ import Error from "../components/alerts/Error.vue"
 import ClientNotes from '../components/ClientNotes.vue';
 import CreateClientNote from '../components/CreateClientNote.vue';
 import ClientContacts from '../components/ClientContacts.vue';
+import ClientTickets from '../components/ClientTickets.vue';
 
 const auth = useAuthStore()
 const route = useRoute()
@@ -80,7 +81,7 @@ axios.get(`/api/get/client/${route.params.clientID}`, {
                 <CreateClientNote :token="token" :clientID="route.params.clientID" />
             </div>
             <div class="tab-pane fade" id="tickets-tab-pane" role="tabpanel" aria-labelledby="tickets-tab" tabindex="0">
-                <p>Tickets</p>
+                <ClientTickets :token="token" :clientID="route.params.clientID"/>
             </div>
             <div class="tab-pane fade" id="projects-tab-pane" role="tabpanel" aria-labelledby="projects-tab" tabindex="0">
                 <p>Projects</p>
