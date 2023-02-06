@@ -32,7 +32,13 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 if (process.env.NODE_ENV === 'production') {
-	app.use('/api', apiLimiter)
+	app.use('/api/get', apiLimiter)
+	app.use('/api/login', apiLimiter)
+	app.use('/api/create', apiLimiter)
+	app.use('/api/update', apiLimiter)
+	app.use('/api/disable', apiLimiter)
+	app.use('/api/enable', apiLimiter)
+	app.use('/api/delete', apiLimiter)
 }
 
 initGetRouter(app)
