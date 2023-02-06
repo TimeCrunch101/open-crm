@@ -45,8 +45,8 @@ exports.logIn = async (req, res) => {
             fullName: user.fullName,
             email: user.email,
           },
-          process.env.JWT_SKEY
-          //{ expiresIn: "15s" } // TODO: Update for production
+          process.env.JWT_SKEY,
+          { expiresIn: "16h" }
         );
 
         res.status(200).json({

@@ -70,9 +70,10 @@ const handelClick = (index) => {
                     </span>
                 </li>
                 <select @change="updateMaxList($event)" class="form-select">
-                    <option value="25" selected>25</option>
-                    <option value="100">100</option>
-                    <option value="200">200</option>
+                    <option value="25" :selected="clientStore.getPageListLength==='25'">25</option>
+                    <option value="50" :selected="clientStore.getPageListLength==='50'">50</option>
+                    <option value="100" :selected="clientStore.getPageListLength==='100'">100</option>
+                    <option value="200" :selected="clientStore.getPageListLength==='200'">200</option>
                 </select>
             </ul>
         </nav>

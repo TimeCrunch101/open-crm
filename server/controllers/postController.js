@@ -1,4 +1,6 @@
 const dbController = require("./databaseController");
+const {projectNumGen} = require('../utils/projectNumGen');
+const {ticketNumGen} = require('../utils/ticketNumGen')
 const { v4: uuidv4 } = require("uuid");
 
 exports.createClient = async (req, res) => {
@@ -176,47 +178,14 @@ exports.enableUser = async (req, res) => {
 
 // Helper Vars for ticket creation
 
-let counter = 0;
-let iteration = new Date().getDate()
-let ticketNumber;
+
 
 exports.createTicket = async (req, res) => {
   try {
-    const year = new Date().getFullYear().toString()
-    let day = new Date().getDate().toString()
-    let month = new Date().getMonth().toString()
-    if (day.length !== 2) {
-      day="0"+day
-    }
-    if (month.length !== 2) {
-      if (month === 0) {
-        month = '01'
-      } else {
-        month="0"+month
-      }
-    }
-    if (iteration === new Date().getDate()) {
-      counter++;
-      switch (counter.toString().length) {
-        case 1:
-          ticketNumber = '00'+counter.toString()
-          break;
-        case 2:
-          ticketNumber = "0"+counter.toString()
-          break;
-        case 3:
-          ticketNumber = counter.toString()
-          break;
-      }
-    } else {
-      iteration = new Date().getDate()
-      counter = 1
-      ticketNumber = "00"+counter.toString()
-    }
-    const ticketNumberConcat = "T"+year+month+day+"."+ticketNumber
+    const ticketNumber = await ticketNumGen()
     await dbController.createTicket({
       ticketID: uuidv4(),
-      ticketNumber: ticketNumberConcat,
+      ticketNumber: ticketNumber,
       client: req.body.client,
       ticketContact: req.body.ticketContact,
       resource: req.body.resource,
@@ -228,6 +197,31 @@ exports.createTicket = async (req, res) => {
     })
     res.status(200).json({
       message: 'Ticket Created'
+    })
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+      cause: error.cause
+    })
+  }
+}
+
+exports.createProject = async (req, res) => {
+  try {
+    const projectNumber = await projectNumGen() // TODO: Use this project number
+    await dbController.createProject({
+      projectID: uuidv4(),
+      client: req.params.clientID,
+      title: req.body.title,
+      summary: req.body.summary,
+      created: new Date(),
+      due: req.body.due,
+      projectedHours: req.body.projectedHours,
+      hoursWorked: 0,
+      primaryResource: req.body.primaryResource,
+    })
+    res.status(200).json({
+      message: 'Project Created'
     })
   } catch (error) {
     res.status(500).json({
