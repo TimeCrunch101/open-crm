@@ -560,3 +560,53 @@ exports.getClientTickets = (clientID) => {
     })
   })
 }
+
+/**
+ * @param {object} projectObj The Project Object
+ * @param {string} projectObj.projectID
+ * @param {string} projectObj.client
+ * @param {string} projectObj.title
+ * @param {string} projectObj.summary
+ * @param {string} projectObj.created
+ * @param {string} projectObj.due
+ * @param {number} projectObj.projectedHours
+ * @param {number} projectObj.hoursWorked
+ * @param {string} projectObj.primaryResource
+ * @returns 
+ */
+
+exports.createProject = (projectObj) => {
+  return new Promise((resolve, reject) => {
+    DB.query("INSERT INTO projects SET ?",{
+      projectID: projectObj.projectID,
+      client: projectObj.client,
+      title: projectObj.title,
+      summary: projectObj.summary,
+      created: projectObj.created,
+      due: projectObj.due,
+      projectedHours: projectObj.projectedHours,
+      hoursWorked: projectObj.hoursWorked,
+      primaryResource: projectObj.primaryResource,
+    }, (err) => {
+      try {
+        if (err) throw new Error('Could not create project', {cause: err.message})
+        resolve(true)
+      } catch (error) {
+        reject(error)
+      }
+    })
+  })
+}
+
+exports.getClientProjects = (clientID) => {
+  return new Promise((resolve, reject) => {
+    DB.query("SELECT * from projects WHERE client = ?", [clientID], (err, projects) => {
+      try {
+        if (err) throw new Error('Could not select projects', {cause: err.message})
+        resolve(projects)
+      } catch (error) {
+        reject(error)
+      }
+    })
+  })
+}

@@ -12,6 +12,7 @@ const initGetRouter = (app) => {
   getRouter.get("/api/get/client/contacts/:clientID", auth.isAuthenticated, getController.getAllClientContacts);
   getRouter.get("/api/get/client/notes/:clientID", auth.isAuthenticated, getController.getClientNotes);
   getRouter.get("/api/get/client/tickets/:clientID", auth.isAuthenticated, getController.getClientTickets)
+  getRouter.get("/api/get/client/projects/:clientID", auth.isAuthenticated, getController.getClientProjects)
 
   return app.use("/", getRouter);
 };
