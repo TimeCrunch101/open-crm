@@ -550,7 +550,7 @@ exports.createTicket = (ticketObj) => {
 
 exports.getClientTickets = (clientID) => {
   return new Promise((resolve, reject) => {
-    DB.query('SELECT * FROM tickets WHERE client = ?',[clientID], (err, tickets) => {
+    DB.query('SELECT * FROM tickets WHERE client = ? ORDER BY created DESC',[clientID], (err, tickets) => {
       try {
         if (err) throw new Error('Could not get tickets', {cause: err.message})
         resolve(tickets)
