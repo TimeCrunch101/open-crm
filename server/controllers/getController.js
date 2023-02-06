@@ -87,7 +87,7 @@ exports.getClientTickets = async (req, res) => {
     });
   }
 }
-
+// TODO: front end for projects
 exports.getClientProjects = async (req, res) => {
   try {
     const projects = await DATABASE.getClientProjects(req.params.clientID)
