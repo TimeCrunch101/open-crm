@@ -54,8 +54,8 @@ const pinNote = (noteID) => {
     }).then((res) => {
         success.value.message = res.data.message
     }).catch((err) => {
-        console.log(err.response.data.error)
-        console.log(err.response.data.cause)
+        console.log(err.response.data.error) // TODO: Remove console.log
+        console.log(err.response.data.cause) // TODO: Remove console.log
     })
 }
 

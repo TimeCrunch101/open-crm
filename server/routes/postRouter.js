@@ -14,6 +14,7 @@ const initPostRouter = (app) => {
     postRouter.patch("/api/update/client/:clientID/pinNote", auth.isAuthenticated, postController.pinClientNote)
     postRouter.put("/api/create/client/note", auth.isAuthenticated, postController.createClientNote)
     postRouter.put("/api/create/client/contact", auth.isAuthenticated, postController.createClientContact)
+    postRouter.put("/api/create/ticket", auth.isAuthenticated, postController.createTicket)
     postRouter.delete("/api/delete/note/:noteID", auth.isAuthenticated, postController.deleteNote)
     postRouter.delete("/api/delete/client/:clientID", auth.isAuthenticated, postController.deleteClient)
     postRouter.delete("/api/delete/user/:userID", auth.isAuthenticated, postController.deleteUser)
