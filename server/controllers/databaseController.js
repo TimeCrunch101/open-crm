@@ -572,7 +572,7 @@ exports.getClientTickets = (clientID) => {
  * @param {number} projectObj.projectedHours
  * @param {number} projectObj.hoursWorked
  * @param {string} projectObj.primaryResource
- * @returns 
+ * @returns A promise, resolves true if successful, rejects with an error Object if the query failed
  */
 
 exports.createProject = (projectObj) => {
@@ -597,6 +597,11 @@ exports.createProject = (projectObj) => {
     })
   })
 }
+
+/**
+ * @param {string} clientID The client ID
+ * @returns A promise, resolves true if successful, rejects with an error Object if the query failed
+ */
 
 exports.getClientProjects = (clientID) => {
   return new Promise((resolve, reject) => {
