@@ -177,13 +177,10 @@ exports.enableUser = async (req, res) => {
   }
 }
 
-// Helper Vars for ticket creation
-
-
-
 exports.createTicket = async (req, res) => {
   try {
     const ticketNumber = await ticketNumGen()
+    const dateCreated = await getDate(new Date())
     await dbController.createTicket({
       ticketID: uuidv4(),
       ticketNumber: ticketNumber,
@@ -192,7 +189,7 @@ exports.createTicket = async (req, res) => {
       resource: req.body.resource,
       title: req.body.title,
       description: req.body.description,
-      created: new Date(),
+      created: dateCreated,
       status: req.body.status,
       priority: req.body.priority,
     })
