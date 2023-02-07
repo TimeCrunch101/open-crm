@@ -566,6 +566,7 @@ exports.getClientTickets = (clientID) => {
  * @param {string} projectObj.projectID
  * @param {string} projectObj.client
  * @param {string} projectObj.title
+ * @param {string} projectObj.projectNumber
  * @param {string} projectObj.summary
  * @param {string} projectObj.created
  * @param {string} projectObj.due
@@ -581,6 +582,7 @@ exports.createProject = (projectObj) => {
       projectID: projectObj.projectID,
       client: projectObj.client,
       title: projectObj.title,
+      projectNumber: projectObj.projectNumber,
       summary: projectObj.summary,
       created: projectObj.created,
       due: projectObj.due,

@@ -19,7 +19,7 @@ app.use((req, res, next) => {
     res.locals.user = req.user
     next()
 })
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV !== 'production') {
   app.use(cors({
     origin: 'http://127.0.0.1:5173',
     credentials: true

@@ -44,9 +44,10 @@ const selectClient = (clientID, companyName) => {
 </script>
 
 <template>
-    <input class="form-control search-clients" @keyup="search()" type="text" placeholder="Search..." v-model="clientName"/>
-    <div v-if="clientSearch.length < 10" class="search-results" v-for="searchResult in clientSearch">
-        <p class="search-items" @click="selectClient(searchResult.clientID, searchResult.companyName)">{{ searchResult.companyName }}</p>
+    <input class="form-control search-clients" @keyup="search()" type="text" placeholder="Select Client..." v-model="clientName"/>
+    <!-- <div v-if="clientSearch.length < 10" class="search-results" v-for="searchResult in clientSearch"> -->
+    <div v-if="clientSearch.length < 20 && clientSearch.length !== 0"  class="search-results" >
+        <p  v-for="searchResult in clientSearch" class="search-items" @click="selectClient(searchResult.clientID, searchResult.companyName)">{{ searchResult.companyName }}</p>
     </div>
  </template>
 
@@ -55,21 +56,25 @@ const selectClient = (clientID, companyName) => {
     position: relative;
 }
 .search-results {
+    border-left: 1px solid rgb(80, 80, 131);
+    border-right: 1px solid rgb(80, 80, 131);
+    border-bottom: 2px solid rgb(80, 80, 131);
     display: flex;
     flex-direction: column;
     padding: 1em;
     position: absolute;
+    z-index: 1000;
     translate: .3em;
-    color: red;
-    background-color: black;
-    width: 300px;
+    color: rgb(136, 201, 255);
+    background-color: rgb(37, 43, 48);
+    width: max-content;
     border-radius: 0 0 1em 1em;
 }
 .search-items {
-    margin-bottom: 3px;
+    margin-bottom: 0px;
 }
 .search-items:hover {
     cursor: pointer;
+    color: rgb(64, 165, 97);
 }
-
 </style>

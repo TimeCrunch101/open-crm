@@ -14,7 +14,7 @@ axios.get(`/api/get/client/tickets/${props.clientID}`, {
 }).then((res) => {
     tickets.value = res.data.tickets
 }).catch((err) => {
-    console.error(err.response.data)
+    console.error(err.response.data) // TODO: handle error
 })
 
 </script>

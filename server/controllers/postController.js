@@ -1,6 +1,7 @@
 const dbController = require("./databaseController");
 const {projectNumGen} = require('../utils/projectNumGen');
 const {ticketNumGen} = require('../utils/ticketNumGen')
+const {getDate} = require('../utils/date')
 const { v4: uuidv4 } = require("uuid");
 
 exports.createClient = async (req, res) => {
@@ -208,13 +209,15 @@ exports.createTicket = async (req, res) => {
 
 exports.createProject = async (req, res) => {
   try {
-    const projectNumber = await projectNumGen() // TODO: Use this project number
+    const projectNumber = await projectNumGen()
+    const date = await getDate(new Date())
     await dbController.createProject({
       projectID: uuidv4(),
-      client: req.params.clientID,
+      client: req.body.clientID,
       title: req.body.title,
+      projectNumber: projectNumber,
       summary: req.body.summary,
-      created: new Date(),
+      created: date,
       due: req.body.due,
       projectedHours: req.body.projectedHours,
       hoursWorked: 0,
