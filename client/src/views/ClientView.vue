@@ -1,6 +1,6 @@
 <script setup>
 import axios from 'axios';
-import { ref } from 'vue';
+import { ref, reactive } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useAuthStore } from '../stores/auth';
 import Error from "../components/alerts/Error.vue"
@@ -14,13 +14,26 @@ const auth = useAuthStore()
 const route = useRoute()
 const token = ref(auth.getToken)
 const client = ref({})
-const pinnedNote = ref({
-    note: null
+const pinnedNote = reactive({
+    note: null,
+    hide: null
 })
 const error = ref({
     message: null,
     cause: null
 })
+
+const unpinNote = (noteID) => {
+    pinnedNote.hide = true
+    axios.patch(`/api/update/client/unpin-note/${route.params.clientID}`,{},{
+        headers: {
+            Authorization: `Bearer ${token.value}`
+        }
+    }).catch((err) => {
+        error.value.message = err.response.data.error
+        error.value.cause = err.response.data.cause
+    })
+}
 
 axios.get(`/api/get/client/${route.params.clientID}`, {
     headers: {
@@ -29,7 +42,7 @@ axios.get(`/api/get/client/${route.params.clientID}`, {
 }).then((res) => {
     client.value = res.data.client
     if (res.data.pinnedNote) {
-        pinnedNote.value = res.data.pinnedNote
+        pinnedNote.note = res.data.pinnedNote.note
     }
 }).catch((err) => {
     error.value.message = err.response.data.error
@@ -67,7 +80,8 @@ axios.get(`/api/get/client/${route.params.clientID}`, {
         </ul>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="main-tab-pane" role="tabpanel" aria-labelledby="main-tab" tabindex="0">
-                <div v-if="pinnedNote.note" class="pinned-note mt-3 mb-3">
+                <div v-if="pinnedNote.note !== null" class="pinned-note mt-3 mb-3" :class="{hidden: pinnedNote.hide === true}">
+                    <i @click="unpinNote(pinnedNote.noteID)" class="bi bi-pin-angle-fill"></i>
                     <p>{{ pinnedNote.note }}</p>
                 </div>
                 <p>Primary Number:<br /> {{ client.primaryPhone }}</p>
@@ -93,17 +107,27 @@ axios.get(`/api/get/client/${route.params.clientID}`, {
 
 <style scoped>
 .pinned-note {
-    outline: 2px solid orange;
     padding-top: 5px;
     padding-bottom: 5px;
     padding-right: 15px;
     border-radius: 1em;
     height: fit-content;
     width: max-content;
+    display: flex;
 }
 .pinned-note > p {
     margin-bottom: 0px;
-    margin-left: 1em;
+    margin-left: .5em;
     color: orange;
+}
+.bi-pin-angle-fill {
+    color: orange;
+    font-size: 1.2rem;
+}
+.bi-pin-angle-fill:hover {
+    cursor: pointer;
+}
+.hidden {
+    display: none;
 }
 </style>

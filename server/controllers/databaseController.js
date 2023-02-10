@@ -617,3 +617,21 @@ exports.getClientProjects = (clientID) => {
     })
   })
 }
+
+/**
+ * @param {string} clientID The clientID
+ * @returns A promise, resolves true if successful, rejects with an error Object if the query failed
+ */
+
+exports.unpinNote = (clientID) => {
+  return new Promise((resolve, reject) => {
+    DB.query("UPDATE clients SET pinnedNote = null WHERE clientID = ?",[clientID],(err) => {
+      try {
+        if (err) throw new Error('Could not unpin the note', {cause: err.message})
+        resolve(true)
+      } catch (error) {
+        reject(error)
+      }
+    })
+  })
+}
