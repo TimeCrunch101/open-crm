@@ -10,7 +10,7 @@ on:
 jobs:
   build:
 
-    runs-on: ["self-hosted", "svr1"]
+    runs-on: [self-hosted, svr1]
 
     strategy:
       matrix:
