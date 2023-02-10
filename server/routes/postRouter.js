@@ -16,6 +16,7 @@ const initPostRouter = (app) => {
     postRouter.patch("/api/disable/user/:userID", auth.isAuthenticated, postController.disableUser)
     postRouter.patch("/api/enable/user/:userID", auth.isAuthenticated, postController.enableUser)
     postRouter.patch("/api/update/client/:clientID/pinNote", auth.isAuthenticated, postController.pinClientNote)
+    postRouter.patch("/api/update/client/unpin-note/:clientID", auth.isAuthenticated, postController.unpinNote)
     postRouter.delete("/api/delete/note/:noteID", auth.isAuthenticated, postController.deleteNote)
     postRouter.delete("/api/delete/client/:clientID", auth.isAuthenticated, postController.deleteClient)
     postRouter.delete("/api/delete/user/:userID", auth.isAuthenticated, postController.deleteUser)

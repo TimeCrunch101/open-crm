@@ -230,3 +230,17 @@ exports.createProject = async (req, res) => {
     })
   }
 }
+
+exports.unpinNote = async (req, res) => {
+  try {
+    await dbController.unpinNote(req.params.clientID)
+    res.status(200).json({
+      message: 'The note was unpinned'
+    })
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+      cause: error.cause
+    })
+  }
+}

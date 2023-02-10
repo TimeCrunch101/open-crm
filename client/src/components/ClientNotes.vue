@@ -40,7 +40,11 @@ const deleteNote = (noteID) => {
         success.value.message = res.data.message
     }).catch((err) => {
         error.value.message = err.response.data.error 
-        error.value.cause = err.response.data.cause 
+        if (err.response.data.cause.includes('foreign key constraint')) {
+            error.value.cause = "A pinned note can't be removed"
+        } else {
+            error.value.cause = err.response.data.cause
+        }
     })
 }
 
@@ -54,8 +58,8 @@ const pinNote = (noteID) => {
     }).then((res) => {
         success.value.message = res.data.message
     }).catch((err) => {
-        console.log(err.response.data.error) // TODO: Remove console.log
-        console.log(err.response.data.cause) // TODO: Remove console.log
+        error.value.message = err.response.data.error 
+        error.value.cause = err.response.data.cause 
     })
 }
 
