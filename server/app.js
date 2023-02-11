@@ -5,7 +5,7 @@ const initGetRouter = require('./routes/getRouter')
 const initPostRouter = require('./routes/postRouter')
 const cors = require('cors')
 const app = express()
-
+// TEST
 const apiLimiter = rateLimit({
 	windowMs: 15 * 60 * 1000, // 15 minutes
 	max: 200,
