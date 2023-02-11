@@ -5,28 +5,24 @@ const initGetRouter = require('./routes/getRouter')
 const initPostRouter = require('./routes/postRouter')
 const cors = require('cors')
 const app = express()
-// TEST
+
 const apiLimiter = rateLimit({
 	windowMs: 15 * 60 * 1000, // 15 minutes
 	max: 200,
 	standardHeaders: true,
 	legacyHeaders: false,
 })
-// TEST
+
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
 app.use((req, res, next) => {
     res.locals.user = req.user
     next()
 })
+
 if (process.env.NODE_ENV !== 'production') {
   app.use(cors({
-    origin: 'http://127.0.0.1:5173',
-    credentials: true
-  }))
-} else {
-  app.use(cors({
-    origin: 'http://192.168.60.101:8080',
+    origin: 'http://localhost:5173',
     credentials: true
   }))
 }
@@ -39,6 +35,7 @@ if (process.env.NODE_ENV === 'production') {
 	app.use('/api/disable', apiLimiter)
 	app.use('/api/enable', apiLimiter)
 	app.use('/api/delete', apiLimiter)
+  app.use('/api/validate', rateLimit({windowMs: 15*60*1000,max:500,standardHeaders:true,legacyHeaders:false}))
 }
 
 initGetRouter(app)
@@ -51,8 +48,5 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(__dirname + '/public/index.html')
   })
 }
-
-
-if (process.env.NODE_ENV === 'production') console.info('PRODUCTION')
 
 app.listen(8080, console.info(`API: http://localhost:8080`))
