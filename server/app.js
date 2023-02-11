@@ -38,6 +38,12 @@ if (process.env.NODE_ENV === 'production') {
   app.use('/api/validate', rateLimit({windowMs: 15*60*1000,max:500,standardHeaders:true,legacyHeaders:false}))
 }
 
+if (process.env.NODE_ENV==='production') {
+  app.get('*',(req, res) => {
+    res.redirect('https://'+req.headers.host+req.url)
+})
+}
+
 initGetRouter(app)
 initPostRouter(app)
 
