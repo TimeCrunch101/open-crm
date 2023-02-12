@@ -20,6 +20,7 @@ const initPostRouter = (app) => {
     postRouter.delete("/api/delete/note/:noteID", auth.isAuthenticated, postController.deleteNote)
     postRouter.delete("/api/delete/client/:clientID", auth.isAuthenticated, postController.deleteClient)
     postRouter.delete("/api/delete/user/:userID", auth.isAuthenticated, postController.deleteUser)
+    postRouter.delete("/api/delete/client/contact/:contactID", auth.isAuthenticated, postController.deleteClientContact)
 
     return app.use('/', postRouter);
 }

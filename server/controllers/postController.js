@@ -244,3 +244,17 @@ exports.unpinNote = async (req, res) => {
     })
   }
 }
+
+exports.deleteClientContact = async (req, res) => {
+  try {
+    await dbController.deleteClientContact(req.params.contactID)
+    res.status(200).json({
+      message: 'Contact Deleted'
+    })
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+      cause: error.cause
+    })
+  }
+}

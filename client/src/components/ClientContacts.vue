@@ -1,9 +1,9 @@
 <script setup>
 import axios from 'axios';
-import { ref } from 'vue'
-import { useRoute } from 'vue-router';
+import { ref, reactive } from 'vue'
 import Error from './alerts/Error.vue';
-const route = useRoute()
+import Success from './alerts/Success.vue';
+
 const props = defineProps({
     token: String,
     clientID: String,
@@ -12,7 +12,26 @@ const error = ref({
     message: null,
     cause: null
 })
-const contacts = ref([])
+const success = reactive({
+    message: false
+})
+const contacts = reactive({
+    value: null
+})
+
+const deleteContact = (contactID, index) => {
+    contacts.value.splice(index, 1)
+    axios.delete(`/api/delete/client/contact/${contactID}`,{
+        headers: {
+            Authorization: `Bearer ${props.token}`
+        }
+    }).then((res) => {
+        success.message = res.data.message
+    }).catch((err) => {
+        error.value.message = err.response.data.error
+        error.value.cause = err.response.data.cause
+    })
+}
 
 axios.get(`/api/get/client/contacts/${props.clientID}`, {
     headers: {
@@ -27,6 +46,7 @@ axios.get(`/api/get/client/contacts/${props.clientID}`, {
 
 </script>
 <template>
+    <Success v-if="success.message" :message="success.message" />
     <Error v-if="error.message" :errorMessage="error.message" :errorCause="error.cause" />
     <table class="table">
         <thead>
@@ -35,15 +55,23 @@ axios.get(`/api/get/client/contacts/${props.clientID}`, {
                 <th scope="col">Last</th>
                 <th scope="col">Email</th>
                 <th scope="col">Primary Phone</th>
+                <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
-            <tr v-for="contact in contacts">
+            <tr v-for="(contact, index) in contacts.value">
                 <td>{{ contact.firstName }}</td>
                 <td>{{ contact.lastName }}</td>
                 <th><a :href="`mailto:${contact.email}`">{{ contact.email }}</a></th>
                 <td>{{ contact.primaryPhone }}</td>
+                <td><i @click="deleteContact(contact.contactID, index)" class="bi bi-trash3-fill"></i></td>
             </tr>
         </tbody>
     </table>
 </template>
+
+<style scoped>
+.bi-trash3-fill:hover {
+    cursor: pointer;
+}
+</style>

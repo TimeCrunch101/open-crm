@@ -635,3 +635,21 @@ exports.unpinNote = (clientID) => {
     })
   })
 }
+
+/**
+ * @param {string} contactID Contact ID
+ * @returns A promise, resolves true if successful, rejects with an error Object if the query failed
+ */
+
+exports.deleteClientContact = (contactID) => {
+  return new Promise((resolve, reject) => {
+    DB.query("DELETE FROM contacts WHERE contactID = ?", [contactID], (err) => {
+      try {
+        if (err) throw new Error('Could not delete contact', {cause: err.message})
+        resolve(true)
+      } catch (error) {
+        reject(error)
+      }
+    })
+  })
+}
