@@ -244,3 +244,40 @@ exports.unpinNote = async (req, res) => {
     })
   }
 }
+
+exports.deleteClientContact = async (req, res) => {
+  try {
+    await dbController.deleteClientContact(req.params.contactID)
+    res.status(200).json({
+      message: 'Contact Deleted'
+    })
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+      cause: error.cause
+    })
+  }
+}
+
+exports.createClientContact = async (req, res) => {
+  try {
+    await dbController.createClientContact({
+      contactID: uuidv4(),
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      fullName: `${req.body.firstName} ${req.body.lastName}`,
+      email: req.body.email,
+      primaryPhone: req.body.primaryPhone,
+      cellPhone: req.body.cellPhone,
+      client: req.params.clientID,
+    })
+    res.status(200).json({
+      message: 'Contact Created'
+    })
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+      cause: error.cause
+    })
+  }
+}

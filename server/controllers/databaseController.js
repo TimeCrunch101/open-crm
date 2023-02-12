@@ -635,3 +635,56 @@ exports.unpinNote = (clientID) => {
     })
   })
 }
+
+/**
+ * @param {string} contactID Contact ID
+ * @returns A promise, resolves true if successful, rejects with an error Object if the query failed
+ */
+
+exports.deleteClientContact = (contactID) => {
+  return new Promise((resolve, reject) => {
+    DB.query("DELETE FROM contacts WHERE contactID = ?", [contactID], (err) => {
+      try {
+        if (err) throw new Error('Could not delete contact', {cause: err.message})
+        resolve(true)
+      } catch (error) {
+        reject(error)
+      }
+    })
+  })
+}
+
+/**
+ * @param {object} contact The contact Object
+ * @param {string} contact.contactID contact ID
+ * @param {string} contact.firstName contact last name
+ * @param {string} contact.lastName contact first name
+ * @param {string} contact.fullName firstname + lastname
+ * @param {string} contact.email contact email
+ * @param {string} contact.primaryPhone contact primary number
+ * @param {string} contact.cellPhone contact cell number
+ * @param {string} contact.client the Client ID
+ * @returns A promise, resolves true if successful, rejects with an error Object if the query failed
+ */
+
+exports.createClientContact = (contact) => {
+  return new Promise((resolve, reject) => {
+    DB.query("INSERT INTO contacts SET ?", {
+      contactID: contact.contactID,
+      firstName: contact.firstName,
+      lastName: contact.lastName,
+      fullName: contact.fullName,
+      email: contact.email,
+      primaryPhone: contact.primaryPhone,
+      cellPhone: contact.cellPhone,
+      client: contact.client,
+    }, (err) => {
+      try {
+        if (err) throw new Error('Could not create contact', {cause: err.message})
+        resolve(true)
+      } catch (error) {
+        reject(error)
+      }
+    })
+  })
+}

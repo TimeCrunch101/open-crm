@@ -9,6 +9,7 @@ import CreateClientNote from '../components/CreateClientNote.vue';
 import ClientContacts from '../components/ClientContacts.vue';
 import ClientTickets from '../components/ClientTickets.vue';
 import ClientProjects from '../components/ClientProjects.vue';
+import CreateClientContact from "../components/CreateClientContact.vue"
 
 const auth = useAuthStore()
 const route = useRoute()
@@ -88,6 +89,7 @@ axios.get(`/api/get/client/${route.params.clientID}`, {
                 <p>Main Location:<br />{{ client.street }}<br />{{ client.city }} {{ client.state }} {{ client.zip }}<br />{{ client.country }}</p>
             </div>
             <div class="tab-pane fade" id="contacts-tab-pane" role="tabpanel" aria-labelledby="contacts-tab" tabindex="0">
+                <CreateClientContact/>
                 <ClientContacts :token="token" :clientID="route.params.clientID"/>
             </div>
             <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
