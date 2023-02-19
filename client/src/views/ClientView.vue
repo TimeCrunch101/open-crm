@@ -19,6 +19,7 @@ const pinnedNote = reactive({
     note: null,
     hide: null
 })
+const POC = ref({})
 const error = ref({
     message: null,
     cause: null
@@ -44,6 +45,9 @@ axios.get(`/api/get/client/${route.params.clientID}`, {
     client.value = res.data.client
     if (res.data.pinnedNote) {
         pinnedNote.note = res.data.pinnedNote.note
+    }
+    if (res.data.POC) {
+        POC.value = res.data.POC
     }
 }).catch((err) => {
     error.value.message = err.response.data.error
@@ -81,6 +85,7 @@ axios.get(`/api/get/client/${route.params.clientID}`, {
         </ul>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="main-tab-pane" role="tabpanel" aria-labelledby="main-tab" tabindex="0">
+                <p v-if="POC.fullName" class="mt-2"><i class="bi bi-star-fill"></i><span class="POC">{{ POC.fullName }}</span></p>
                 <div v-if="pinnedNote.note !== null" class="pinned-note mt-3 mb-3" :class="{hidden: pinnedNote.hide === true}">
                     <i @click="unpinNote(pinnedNote.noteID)" class="bi bi-pin-angle-fill"></i>
                     <p>{{ pinnedNote.note }}</p>
@@ -131,5 +136,18 @@ axios.get(`/api/get/client/${route.params.clientID}`, {
 }
 .hidden {
     display: none;
+}
+.POC {
+    margin-left: .7em;
+    color: rgb(80, 127, 255);
+}
+.POC:hover {
+    cursor: pointer;
+}
+.bi-star-fill {
+    color: rgb(80, 127, 255);
+}
+.bi-star-fill:hover {
+    cursor: pointer;
 }
 </style>

@@ -1,6 +1,6 @@
 <script setup>
 import axios from "axios";
-import { ref, defineEmits } from "vue";
+import { ref } from "vue";
 
 const props = defineProps({
     clientID: String,
@@ -14,7 +14,6 @@ const form = ref({
     primaryPhone: null,
     cellPhone: null,
 })
-
 const createContact = () => {
     axios.put(`/api/create/client/contact/${props.clientID}`,{
         firstName: form.value.firstName,

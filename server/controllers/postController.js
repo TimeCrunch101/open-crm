@@ -281,3 +281,18 @@ exports.createClientContact = async (req, res) => {
     })
   }
 }
+
+exports.setClientPOC = async (req, res) => {
+  try {
+    await dbController.setClientPOC(req.body.contactID, req.params.clientID)
+    await dbController.updateContactSetPOC(req.body.contactID)
+    res.status(200).json({
+      message: 'Primary Contact Set'
+    })
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+      cause: error.cause
+    })
+  }
+}

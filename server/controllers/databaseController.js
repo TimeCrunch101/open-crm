@@ -1,4 +1,5 @@
 const { DB } = require("../config/db");
+const { removeNonPOC } = require('../utils/handlePOC')
 
 /**
  * @returns All users as an Array
@@ -245,15 +246,9 @@ exports.getClients = () => {
 
 exports.getClient = (clientID) => {
   return new Promise((resolve, reject) => {
-    DB.query(
-      "SELECT * FROM clients WHERE clientID = ?",
-      [clientID],
-      (err, data) => {
+    DB.query("SELECT * FROM clients WHERE clientID = ?",[clientID],(err, data) => {
         try {
-          if (err)
-            throw new Error("Could not retrieve client information", {
-              cause: err.message,
-            });
+          if (err) throw new Error("Could not retrieve client information", {cause: err.message});
           resolve(data[0]);
         } catch (error) {
           reject(err);
@@ -349,15 +344,9 @@ exports.createClientContact = (contact) => {
 
 exports.getAllClientContacts = (clientID) => {
   return new Promise((resolve, reject) => {
-    DB.query(
-      "SELECT * FROM contacts WHERE client = ?",
-      [clientID],
-      (err, contacts) => {
+    DB.query("SELECT * FROM contacts WHERE client = ?", [clientID], (err, contacts) => {
         try {
-          if (err)
-            throw new Error("Could not retrieve contact list", {
-              cause: err.message,
-            });
+          if (err) throw new Error("Could not retrieve contact list", {cause: err.message});
           resolve(contacts);
         } catch (error) {
           reject(error);
@@ -370,7 +359,6 @@ exports.getAllClientContacts = (clientID) => {
 // TODO: updateClientContact()
 
 /**
- * 
  * @param {string} contactID 
  * @returns A promise, resolves true if successful, rejects with an error Object if the query failed
  */
@@ -681,6 +669,62 @@ exports.createClientContact = (contact) => {
     }, (err) => {
       try {
         if (err) throw new Error('Could not create contact', {cause: err.message})
+        resolve(true)
+      } catch (error) {
+        reject(error)
+      }
+    })
+  })
+}
+
+/**
+ * @param {string} contactID The contact ID
+ * @param {string} clientID The Client ID
+ * @returns A promise, resolves true if successful, rejects with an error Object if the query failed
+ */
+
+exports.setClientPOC = (contactID, clientID) => {
+  return new Promise(async(resolve, reject) => {
+    await removeNonPOC(contactID, clientID)
+    DB.query("UPDATE clients SET POC = ? WHERE clientID = ?",[contactID, clientID], (err)=> {
+      try {
+        if (err) throw new Error('Could not set POC', {cause: err.message})
+        resolve(true)
+      } catch (error) {
+        reject(error)
+      }
+    })
+  })
+}
+
+/**
+ * @param {string} contactID The contact ID
+ * @returns A promise, resolves true if successful, rejects with an error Object if the query failed
+ */
+
+exports.getClientPOC = (contactID) => {
+  return new Promise((resolve, reject) => {
+    DB.query("SELECT * FROM contacts WHERE contactID = ?",[contactID],(err, contact) => {
+      try {
+        if (err) throw new Error('Could not get POC', {cause: err.message})
+        resolve(contact[0])
+      } catch (error) {
+        reject(error)
+      }
+    })
+  })
+}
+
+/**
+ * @param {string} contactID The contact ID
+ * @returns A promise, resolves true if successful, rejects with an error Object if the query failed
+ */
+
+exports.updateContactSetPOC = (contactID) => {
+  return new Promise((resolve, reject) => {
+    DB.query("UPDATE contacts SET isPOC = 1 WHERE contactID = ?", [contactID], (err) => {
+      try {
+        if (err) throw new Error('Could not update contact', {cause: err.message})
         resolve(true)
       } catch (error) {
         reject(error)
