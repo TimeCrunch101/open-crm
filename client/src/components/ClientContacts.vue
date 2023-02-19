@@ -33,6 +33,21 @@ const deleteContact = (contactID, index) => {
     })
 }
 
+const setPOC = (contactID) => {
+    axios.patch(`/api/update/client/setPOC/${props.clientID}`,{
+        contactID: contactID
+    }, {
+        headers: {
+            Authorization: `Bearer ${props.token}`
+        }
+    }).then((res) => {
+        success.message = res.data.message
+    }).catch((err) => {
+        error.value.message = err.response.data.error
+        error.value.cause = err.response.data.cause
+    })
+}
+
 axios.get(`/api/get/client/contacts/${props.clientID}`, {
     headers: {
         Authorization: `Bearer ${props.token}`
@@ -51,8 +66,7 @@ axios.get(`/api/get/client/contacts/${props.clientID}`, {
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
+                <th scope="col">Full Name</th>
                 <th scope="col">Email</th>
                 <th scope="col">Primary Phone</th>
                 <th scope="col">Actions</th>
@@ -60,11 +74,13 @@ axios.get(`/api/get/client/contacts/${props.clientID}`, {
         </thead>
         <tbody>
             <tr v-for="(contact, index) in contacts.value">
-                <td>{{ contact.firstName }}</td>
-                <td>{{ contact.lastName }}</td>
+                <td>{{ contact.fullName }}</td>
                 <th><a :href="`mailto:${contact.email}`">{{ contact.email }}</a></th>
                 <td>{{ contact.primaryPhone }}</td>
-                <td><i @click="deleteContact(contact.contactID, index)" class="bi bi-trash3-fill"></i></td>
+                <td class="d-flex">
+                    <i @click="deleteContact(contact.contactID, index)" class="bi bi-trash3-fill"></i>
+                    <i @click="setPOC(contact.contactID)" class="bi " :class="{'bi-star-fill':contact.isPOC===1,'bi-star':contact.isPOC === 0} "></i>
+                </td>
             </tr>
         </tbody>
     </table>
@@ -73,5 +89,11 @@ axios.get(`/api/get/client/contacts/${props.clientID}`, {
 <style scoped>
 .bi-trash3-fill:hover {
     cursor: pointer;
+}
+.bi-star:hover {
+    cursor: pointer;
+}
+.d-flex {
+    gap: 1em;
 }
 </style>
